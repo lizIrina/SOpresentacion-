@@ -1,324 +1,1524 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#071b55"><meta name="description" content="Laboratorio interactivo de Sistemas Operativos UNIB.E"><title>Sistemas Operativos · UNIB.E</title>
-<style>
-:root{--nv:#001871;--nv2:#0d2c9c;--bg:#f2f5fa;--tx:#1b2440;--mu:#5d6a8c;--ln:#d9e0ee;--ac:#2f6bff;--am:#e8a317;--ok:#16905f;--bad:#d4403f}
-*{box-sizing:border-box}body{margin:0;font:15px/1.6 "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--tx);background:var(--bg)}
-aside{position:fixed;inset:0 auto 0 0;width:268px;background:var(--nv);color:#fff;display:flex;flex-direction:column;padding:18px 14px;z-index:5}
-.brand{display:flex;gap:12px;align-items:center;padding:0 6px 18px;border-bottom:1px solid #ffffff2a;cursor:pointer}.brand img{width:58px;height:58px;display:block}.brand b{font-size:15px;line-height:1.25;font-weight:600}.brand span{display:block;font-weight:400;font-size:12px;color:#aebbee}
-nav{margin:14px 0;display:flex;flex-direction:column;gap:2px;overflow:auto}
-nav button{display:flex;gap:10px;align-items:center;text-align:left;background:none;border:0;border-left:3px solid transparent;color:#c9d3f5;padding:10px;border-radius:6px;font:inherit;cursor:pointer}
-nav button:hover{background:#ffffff14}nav button.on{background:#ffffff1f;color:#fff;border-left-color:var(--am)}
-nav i{margin-left:auto;width:8px;height:8px;border-radius:50%;background:#ffffff33;flex:none}nav i.d{background:#4fd9a0}
-.pr{margin-top:auto;padding:11px;border:1px solid #ffffff55;background:none;color:#fff;border-radius:6px;font:inherit;cursor:pointer}.pr:hover{background:#ffffff1a}
-main{margin-left:268px;padding:28px 34px 50px;max-width:1560px}
-h1{margin:0 0 4px;font-size:27px;letter-spacing:-.3px;color:var(--nv)}.sub{color:var(--mu);margin:0 0 22px;max-width:70ch}
-.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
-.kpis{display:flex;gap:14px;margin:6px 0 24px;flex-wrap:wrap}.kpi{background:#fff;border:1px solid var(--ln);border-radius:8px;padding:12px 18px;min-width:150px}.kpi b{display:block;font-size:26px;color:var(--nv);line-height:1.1}.kpi span{color:var(--mu);font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
-.card{text-align:left;background:#fff;border:1px solid var(--ln);border-radius:10px;padding:20px;font:inherit;color:inherit;cursor:pointer;display:flex;flex-direction:column;gap:8px;transition:box-shadow .2s,border-color .2s;border-top:4px solid var(--nv)}
-.card:hover,.card:focus-visible{border-color:var(--ac);box-shadow:0 10px 26px -14px #001871aa;outline:0}
-.card svg{width:40px;height:40px;stroke:var(--nv);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.card small{color:var(--mu);font-size:12.5px}.card h3{margin:0;font-size:18px;color:var(--nv)}.card p{margin:0;color:var(--mu);font-size:14px}.card .st{margin-top:auto;font-size:13px;font-weight:600;color:var(--ac)}.card .st.d{color:var(--ok)}
-.btn{background:var(--nv);color:#fff;border:0;border-radius:6px;padding:9px 15px;font:inherit;font-size:14px;cursor:pointer}.btn:hover{background:var(--nv2)}.btn.o{background:#fff;color:var(--nv);border:1px solid var(--nv)}.btn.o:hover{background:#eaf0ff}.btn:disabled{opacity:.35;cursor:not-allowed}
-.view{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(310px,1fr);gap:22px;align-items:start}
-@media(max-width:1000px){.view{grid-template-columns:1fr}aside{position:static;width:auto;flex-direction:row;flex-wrap:wrap;align-items:center}main{margin-left:0;padding:18px}nav{flex-direction:row;flex-wrap:wrap}.pr{margin:0}}
-.pn{background:#fff;border:1px solid var(--ln);border-radius:10px;padding:18px}
-.lab{padding:14px}.cv{height:440px;border-radius:8px;background:linear-gradient(160deg,#0b2377,#00103f);margin-bottom:12px;overflow:hidden}.cv canvas{display:block;width:100%!important;height:100%!important}
-.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}.bar button{background:var(--nv);color:#fff;border:0;border-radius:6px;padding:8px 13px;font:inherit;font-size:14px;cursor:pointer}.bar button:hover{background:var(--nv2)}.bar button.g{background:#fff;color:var(--nv);border:1px solid var(--nv)}.bar button:disabled,.evs button:disabled{opacity:.3;cursor:not-allowed}
-select,input[type=number]{font:inherit;font-size:14px;border:1px solid var(--ln);border-radius:6px;padding:7px;background:#fff;color:var(--tx)}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}.chips button{background:#fff;border:1px solid var(--ln);color:var(--tx);border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer}.chips button.on{background:var(--nv);color:#fff;border-color:var(--nv)}
-.info,.log,.rd{background:#f2f5fa;border:1px solid var(--ln);border-left:4px solid var(--am);border-radius:6px;padding:11px 14px;font-size:14px;margin-top:8px}.mu{color:var(--mu)}
-.evs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}.evs button{background:var(--nv);color:#fff;border:0;border-radius:6px;padding:8px 13px;font:inherit;font-size:14px;cursor:pointer}.evs button.g{background:#fff;color:var(--nv);border:1px solid var(--nv)}
-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}td,th{padding:6px 8px;border-bottom:1px solid var(--ln);text-align:center}th{color:var(--mu);font-weight:600}
-.sp{display:flex;gap:4px;margin-bottom:12px}.sp i{flex:1;height:5px;border-radius:3px;background:var(--ln)}.sp i.on{background:var(--am)}.sp i.dn{background:var(--nv)}
-.sc{color:var(--mu);font-size:13px}.stt{margin:2px 0 8px;font-size:19px;color:var(--nv)}.stx{font-size:15.5px;min-height:150px}
-.nv{display:flex;gap:8px;margin-top:10px}
-.qz{margin-top:22px}.qz h3{margin:0 0 10px;color:var(--nv);font-size:17px}.qz p{margin:14px 0 8px;font-weight:600}.qz button.o{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--ln);border-radius:6px;padding:9px 12px;margin-bottom:6px;font:inherit;font-size:14px;cursor:pointer}.qz button.o:hover{border-color:var(--ac)}.qz button.ok{border-color:var(--ok);background:#e6f6ef}.qz button.no{border-color:var(--bad);background:#fcebea}.fb{font-size:13.5px;color:var(--mu);margin-bottom:4px}
-body.pres aside{display:none}body.pres main{margin-left:0;max-width:none}body.pres .cv{height:62vh}body.pres .stx{font-size:19px}body.pres .stt{font-size:24px}
+<html lang="es">
 
-/* Rediseño didáctico */
-:root{--nv:#071b55;--nv2:#153a9b;--bg:#eef3fb;--tx:#172443;--mu:#647392;--ln:#d8e1f0;--ac:#5c8cff;--am:#ffbd45;--ok:#18a879}
-body{background:radial-gradient(ellipse at 80% -10%,#dce8ff 0,transparent 38%),var(--bg);font-size:15.5px}
-aside{background:linear-gradient(180deg,#071747,#102d78 72%,#081b50);box-shadow:8px 0 28px #07174720}
-.brand img{object-fit:contain;filter:drop-shadow(0 5px 10px #0004)}
-main{max-width:1700px;padding:34px clamp(18px,3vw,52px) 60px}
-h1{font-size:clamp(28px,3vw,40px);letter-spacing:-1px}
-.sub{font-size:16px;line-height:1.65;max-width:76ch}
-.kpi,.pn,.card{border-radius:16px;box-shadow:0 10px 35px #1b39700b}
-.kpi{border:1px solid #dbe5f5;padding:16px 20px}
-.kpi b{font-size:30px}
-.card{padding:23px;border:1px solid #dbe5f5;border-top:4px solid #234ca8;min-height:220px;transition:transform .25s,box-shadow .25s}
-.card:hover{transform:translateY(-5px);box-shadow:0 18px 38px #18356b20}
-.card svg{width:46px;height:46px}
-.btn{border-radius:9px;padding:10px 17px;font-weight:600}
-.btn.o{border-color:#c7d4eb}
-.pn{padding:22px;border-color:#dbe4f2}
-.cv{height:clamp(300px,38vw,480px);border-radius:14px;background:radial-gradient(circle at 50% 35%,#183d9e,#06133f 75%);box-shadow:inset 0 0 50px #020b2a}
-.info,.log,.rd{border-radius:12px;padding:15px 17px;line-height:1.75}
-.chips button,.bar button,.evs button{border-radius:9px}
-.chips button{padding:7px 13px}
-.stx{font-size:16px;line-height:1.85;min-height:unset;white-space:pre-line}
-.stt{font-size:22px;letter-spacing:-.3px;margin:7px 0 12px}
-.sp i{height:7px}
-.casebox{margin-top:20px;border:1px solid #d8e3f4;background:linear-gradient(135deg,#fff,#f4f7ff);border-radius:16px;padding:20px}
-.casebox .eyebrow{font-size:11px;font-weight:800;letter-spacing:1.4px;color:#5273b9;text-transform:uppercase}
-.casebox h3{margin:5px 0 8px;color:#0a205d;font-size:19px}
-.casebox p{line-height:1.75;color:#445474;margin:8px 0}
-.case-answer{display:none;margin-top:12px;padding:13px 15px;background:#eaf3ff;border-left:4px solid #4d80e8;border-radius:9px;line-height:1.7}
-.case-answer.show{display:block;animation:rise .35s ease}
-@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.home-hero{background:linear-gradient(115deg,#081b55,#1745a6 70%,#477be0);color:white;border-radius:22px;padding:clamp(24px,4vw,42px);margin-bottom:24px;position:relative;overflow:hidden;box-shadow:0 20px 50px #0c2c7530}
-.home-hero:after{content:"";position:absolute;width:300px;height:300px;border:1px solid #ffffff30;border-radius:50%;right:-70px;top:-100px;box-shadow:0 0 0 30px #ffffff0b,0 0 0 70px #ffffff08}
-.home-hero h1{color:#fff;margin-bottom:8px}.home-hero p{color:#dce7ff;max-width:70ch;margin:0;line-height:1.8}
-.section-label{font-size:12px;text-transform:uppercase;letter-spacing:1.4px;color:#6c7ea4;font-weight:800;margin:25px 0 12px}
-.topic-meta{font-size:12px;color:#8fa7d9;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.lesson-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;flex-wrap:wrap}
-.lesson-note{font-size:13px;color:#7180a0;margin-top:10px}
-body.pres aside{display:none}body.pres main{padding:24px;max-width:none}body.pres .cv{height:58vh}body.pres .stx{font-size:clamp(18px,2vw,23px)}body.pres .pn{padding:26px}
-@media(max-width:1000px){aside{position:relative;width:100%;padding:12px 14px}.brand{padding-bottom:10px}main{padding:18px}.cv{height:340px}}
-@media(max-width:600px){nav{max-height:180px;overflow:auto}.brand img{width:44px;height:44px}.view{gap:14px}.pn{padding:15px}.cv{height:290px}}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071b55">
+  <meta name="description" content="Laboratorio interactivo de Sistemas Operativos UNIB.E">
+  <title>Sistemas Operativos · UNIB.E</title>
+  <style>
+    :root {
+      --nv: #001871;
+      --nv2: #0d2c9c;
+      --bg: #f2f5fa;
+      --tx: #1b2440;
+      --mu: #5d6a8c;
+      --ln: #d9e0ee;
+      --ac: #2f6bff;
+      --am: #e8a317;
+      --ok: #16905f;
+      --bad: #d4403f
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font: 15px/1.6 "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--tx);
+      background: var(--bg)
+    }
+
+    aside {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 268px;
+      background: var(--nv);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 18px 14px;
+      z-index: 5
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 0 6px 18px;
+      border-bottom: 1px solid #ffffff2a;
+      cursor: pointer
+    }
+
+    .brand img {
+      width: 58px;
+      height: 58px;
+      display: block
+    }
+
+    .brand b {
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 600
+    }
+
+    .brand span {
+      display: block;
+      font-weight: 400;
+      font-size: 12px;
+      color: #aebbee
+    }
+
+    nav {
+      margin: 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: auto
+    }
+
+    nav button {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      text-align: left;
+      background: none;
+      border: 0;
+      border-left: 3px solid transparent;
+      color: #c9d3f5;
+      padding: 10px;
+      border-radius: 6px;
+      font: inherit;
+      cursor: pointer
+    }
+
+    nav button:hover {
+      background: #ffffff14
+    }
+
+    nav button.on {
+      background: #ffffff1f;
+      color: #fff;
+      border-left-color: var(--am)
+    }
+
+    nav i {
+      margin-left: auto;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffffff33;
+      flex: none
+    }
+
+    nav i.d {
+      background: #4fd9a0
+    }
+
+    .pr {
+      margin-top: auto;
+      padding: 11px;
+      border: 1px solid #ffffff55;
+      background: none;
+      color: #fff;
+      border-radius: 6px;
+      font: inherit;
+      cursor: pointer
+    }
+
+    .pr:hover {
+      background: #ffffff1a
+    }
+
+    main {
+      margin-left: 268px;
+      padding: 28px 34px 50px;
+      max-width: 1560px
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 27px;
+      letter-spacing: -.3px;
+      color: var(--nv)
+    }
+
+    .sub {
+      color: var(--mu);
+      margin: 0 0 22px;
+      max-width: 70ch
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap
+    }
+
+    .kpis {
+      display: flex;
+      gap: 14px;
+      margin: 6px 0 24px;
+      flex-wrap: wrap
+    }
+
+    .kpi {
+      background: #fff;
+      border: 1px solid var(--ln);
+      border-radius: 8px;
+      padding: 12px 18px;
+      min-width: 150px
+    }
+
+    .kpi b {
+      display: block;
+      font-size: 26px;
+      color: var(--nv);
+      line-height: 1.1
+    }
+
+    .kpi span {
+      color: var(--mu);
+      font-size: 13px
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 18px
+    }
+
+    .card {
+      text-align: left;
+      background: #fff;
+      border: 1px solid var(--ln);
+      border-radius: 10px;
+      padding: 20px;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: box-shadow .2s, border-color .2s;
+      border-top: 4px solid var(--nv)
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      border-color: var(--ac);
+      box-shadow: 0 10px 26px -14px #001871aa;
+      outline: 0
+    }
+
+    .card svg {
+      width: 40px;
+      height: 40px;
+      stroke: var(--nv);
+      fill: none;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round
+    }
+
+    .card small {
+      color: var(--mu);
+      font-size: 12.5px
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--nv)
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--mu);
+      font-size: 14px
+    }
+
+    .card .st {
+      margin-top: auto;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ac)
+    }
+
+    .card .st.d {
+      color: var(--ok)
+    }
+
+    .btn {
+      background: var(--nv);
+      color: #fff;
+      border: 0;
+      border-radius: 6px;
+      padding: 9px 15px;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer
+    }
+
+    .btn:hover {
+      background: var(--nv2)
+    }
+
+    .btn.o {
+      background: #fff;
+      color: var(--nv);
+      border: 1px solid var(--nv)
+    }
+
+    .btn.o:hover {
+      background: #eaf0ff
+    }
+
+    .btn:disabled {
+      opacity: .35;
+      cursor: not-allowed
+    }
+
+    .view {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(310px, 1fr);
+      gap: 22px;
+      align-items: start
+    }
+
+    @media(max-width:1000px) {
+      .view {
+        grid-template-columns: 1fr
+      }
+
+      aside {
+        position: static;
+        width: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center
+      }
+
+      main {
+        margin-left: 0;
+        padding: 18px
+      }
+
+      nav {
+        flex-direction: row;
+        flex-wrap: wrap
+      }
+
+      .pr {
+        margin: 0
+      }
+    }
+
+    .pn {
+      background: #fff;
+      border: 1px solid var(--ln);
+      border-radius: 10px;
+      padding: 18px
+    }
+
+    .lab {
+      padding: 14px
+    }
+
+    .cv {
+      height: 440px;
+      border-radius: 8px;
+      background: linear-gradient(160deg, #0b2377, #00103f);
+      margin-bottom: 12px;
+      overflow: hidden
+    }
+
+    .cv canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important
+    }
+
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px
+    }
+
+    .bar button {
+      background: var(--nv);
+      color: #fff;
+      border: 0;
+      border-radius: 6px;
+      padding: 8px 13px;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer
+    }
+
+    .bar button:hover {
+      background: var(--nv2)
+    }
+
+    .bar button.g {
+      background: #fff;
+      color: var(--nv);
+      border: 1px solid var(--nv)
+    }
+
+    .bar button:disabled,
+    .evs button:disabled {
+      opacity: .3;
+      cursor: not-allowed
+    }
+
+    select,
+    input[type=number] {
+      font: inherit;
+      font-size: 14px;
+      border: 1px solid var(--ln);
+      border-radius: 6px;
+      padding: 7px;
+      background: #fff;
+      color: var(--tx)
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px
+    }
+
+    .chips button {
+      background: #fff;
+      border: 1px solid var(--ln);
+      color: var(--tx);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer
+    }
+
+    .chips button.on {
+      background: var(--nv);
+      color: #fff;
+      border-color: var(--nv)
+    }
+
+    .info,
+    .log,
+    .rd {
+      background: #f2f5fa;
+      border: 1px solid var(--ln);
+      border-left: 4px solid var(--am);
+      border-radius: 6px;
+      padding: 11px 14px;
+      font-size: 14px;
+      margin-top: 8px
+    }
+
+    .mu {
+      color: var(--mu)
+    }
+
+    .evs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px
+    }
+
+    .evs button {
+      background: var(--nv);
+      color: #fff;
+      border: 0;
+      border-radius: 6px;
+      padding: 8px 13px;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer
+    }
+
+    .evs button.g {
+      background: #fff;
+      color: var(--nv);
+      border: 1px solid var(--nv)
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 10px
+    }
+
+    td,
+    th {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--ln);
+      text-align: center
+    }
+
+    th {
+      color: var(--mu);
+      font-weight: 600
+    }
+
+    .sp {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px
+    }
+
+    .sp i {
+      flex: 1;
+      height: 5px;
+      border-radius: 3px;
+      background: var(--ln)
+    }
+
+    .sp i.on {
+      background: var(--am)
+    }
+
+    .sp i.dn {
+      background: var(--nv)
+    }
+
+    .sc {
+      color: var(--mu);
+      font-size: 13px
+    }
+
+    .stt {
+      margin: 2px 0 8px;
+      font-size: 19px;
+      color: var(--nv)
+    }
+
+    .stx {
+      font-size: 15.5px;
+      min-height: 150px
+    }
+
+    .nv {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px
+    }
+
+    .qz {
+      margin-top: 22px
+    }
+
+    .qz h3 {
+      margin: 0 0 10px;
+      color: var(--nv);
+      font-size: 17px
+    }
+
+    .qz p {
+      margin: 14px 0 8px;
+      font-weight: 600
+    }
+
+    .qz button.o {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: #fff;
+      border: 1px solid var(--ln);
+      border-radius: 6px;
+      padding: 9px 12px;
+      margin-bottom: 6px;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer
+    }
+
+    .qz button.o:hover {
+      border-color: var(--ac)
+    }
+
+    .qz button.ok {
+      border-color: var(--ok);
+      background: #e6f6ef
+    }
+
+    .qz button.no {
+      border-color: var(--bad);
+      background: #fcebea
+    }
+
+    .fb {
+      font-size: 13.5px;
+      color: var(--mu);
+      margin-bottom: 4px
+    }
+
+    body.pres aside {
+      display: none
+    }
+
+    body.pres main {
+      margin-left: 0;
+      max-width: none
+    }
+
+    body.pres .cv {
+      height: 62vh
+    }
+
+    body.pres .stx {
+      font-size: 19px
+    }
+
+    body.pres .stt {
+      font-size: 24px
+    }
+
+    /* Rediseño didáctico */
+    :root {
+      --nv: #071b55;
+      --nv2: #153a9b;
+      --bg: #eef3fb;
+      --tx: #172443;
+      --mu: #647392;
+      --ln: #d8e1f0;
+      --ac: #5c8cff;
+      --am: #ffbd45;
+      --ok: #18a879
+    }
+
+    body {
+      background: radial-gradient(ellipse at 80% -10%, #dce8ff 0, transparent 38%), var(--bg);
+      font-size: 15.5px
+    }
+
+    aside {
+      background: linear-gradient(180deg, #071747, #102d78 72%, #081b50);
+      box-shadow: 8px 0 28px #07174720
+    }
+
+    .brand img {
+      object-fit: contain;
+      filter: drop-shadow(0 5px 10px #0004)
+    }
+
+    main {
+      max-width: 1700px;
+      padding: 34px clamp(18px, 3vw, 52px) 60px
+    }
+
+    h1 {
+      font-size: clamp(28px, 3vw, 40px);
+      letter-spacing: -1px
+    }
+
+    .sub {
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 76ch
+    }
+
+    .kpi,
+    .pn,
+    .card {
+      border-radius: 16px;
+      box-shadow: 0 10px 35px #1b39700b
+    }
+
+    .kpi {
+      border: 1px solid #dbe5f5;
+      padding: 16px 20px
+    }
+
+    .kpi b {
+      font-size: 30px
+    }
+
+    .card {
+      padding: 23px;
+      border: 1px solid #dbe5f5;
+      border-top: 4px solid #234ca8;
+      min-height: 220px;
+      transition: transform .25s, box-shadow .25s
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 38px #18356b20
+    }
+
+    .card svg {
+      width: 46px;
+      height: 46px
+    }
+
+    .btn {
+      border-radius: 9px;
+      padding: 10px 17px;
+      font-weight: 600
+    }
+
+    .btn.o {
+      border-color: #c7d4eb
+    }
+
+    .pn {
+      padding: 22px;
+      border-color: #dbe4f2
+    }
+
+    .cv {
+      height: clamp(300px, 38vw, 480px);
+      border-radius: 14px;
+      background: radial-gradient(circle at 50% 35%, #183d9e, #06133f 75%);
+      box-shadow: inset 0 0 50px #020b2a
+    }
+
+    .info,
+    .log,
+    .rd {
+      border-radius: 12px;
+      padding: 15px 17px;
+      line-height: 1.75
+    }
+
+    .chips button,
+    .bar button,
+    .evs button {
+      border-radius: 9px
+    }
+
+    .chips button {
+      padding: 7px 13px
+    }
+
+    .stx {
+      font-size: 16px;
+      line-height: 1.85;
+      min-height: unset;
+      white-space: pre-line
+    }
+
+    .stt {
+      font-size: 22px;
+      letter-spacing: -.3px;
+      margin: 7px 0 12px
+    }
+
+    .sp i {
+      height: 7px
+    }
+
+    .casebox {
+      margin-top: 20px;
+      border: 1px solid #d8e3f4;
+      background: linear-gradient(135deg, #fff, #f4f7ff);
+      border-radius: 16px;
+      padding: 20px
+    }
+
+    .casebox .eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      color: #5273b9;
+      text-transform: uppercase
+    }
+
+    .casebox h3 {
+      margin: 5px 0 8px;
+      color: #0a205d;
+      font-size: 19px
+    }
+
+    .casebox p {
+      line-height: 1.75;
+      color: #445474;
+      margin: 8px 0
+    }
+
+    .case-answer {
+      display: none;
+      margin-top: 12px;
+      padding: 13px 15px;
+      background: #eaf3ff;
+      border-left: 4px solid #4d80e8;
+      border-radius: 9px;
+      line-height: 1.7
+    }
+
+    .case-answer.show {
+      display: block;
+      animation: rise .35s ease
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .home-hero {
+      background: linear-gradient(115deg, #081b55, #1745a6 70%, #477be0);
+      color: white;
+      border-radius: 22px;
+      padding: clamp(24px, 4vw, 42px);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px #0c2c7530
+    }
+
+    .home-hero:after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border: 1px solid #ffffff30;
+      border-radius: 50%;
+      right: -70px;
+      top: -100px;
+      box-shadow: 0 0 0 30px #ffffff0b, 0 0 0 70px #ffffff08
+    }
+
+    .home-hero h1 {
+      color: #fff;
+      margin-bottom: 8px
+    }
+
+    .home-hero p {
+      color: #dce7ff;
+      max-width: 70ch;
+      margin: 0;
+      line-height: 1.8
+    }
+
+    .section-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: #6c7ea4;
+      font-weight: 800;
+      margin: 25px 0 12px
+    }
+
+    .topic-meta {
+      font-size: 12px;
+      color: #8fa7d9;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase
+    }
+
+    .lesson-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+      flex-wrap: wrap
+    }
+
+    .lesson-note {
+      font-size: 13px;
+      color: #7180a0;
+      margin-top: 10px
+    }
+
+    body.pres aside {
+      display: none
+    }
+
+    body.pres main {
+      padding: 24px;
+      max-width: none
+    }
+
+    body.pres .cv {
+      height: 58vh
+    }
+
+    body.pres .stx {
+      font-size: clamp(18px, 2vw, 23px)
+    }
+
+    body.pres .pn {
+      padding: 26px
+    }
+
+    @media(max-width:1000px) {
+      aside {
+        position: relative;
+        width: 100%;
+        padding: 12px 14px
+      }
+
+      .brand {
+        padding-bottom: 10px
+      }
+
+      main {
+        padding: 18px
+      }
+
+      .cv {
+        height: 340px
+      }
+    }
+
+    @media(max-width:600px) {
+      nav {
+        max-height: 180px;
+        overflow: auto
+      }
+
+      .brand img {
+        width: 44px;
+        height: 44px
+      }
+
+      .view {
+        gap: 14px
+      }
+
+      .pn {
+        padding: 15px
+      }
+
+      .cv {
+        height: 290px
+      }
+    }
 
 
-/* Diseño visual renovado: material académico, sin textos promocionales */
-:root{--nv:#071638;--nv2:#173d87;--bg:#f3f6fc;--tx:#14213d;--mu:#63718c;--ac:#3979e8;--am:#ffbd58}
-body{background:linear-gradient(145deg,#f7f9fd,#edf2fa);font-family:Inter,"Segoe UI",Arial,sans-serif}
-aside{background:linear-gradient(180deg,#07142f 0%,#0c2454 55%,#102d69 100%);box-shadow:10px 0 35px #071b3a24}
-.brand img{width:62px;height:62px;filter:drop-shadow(0 6px 12px #0005)}
-main{max-width:1740px;padding:34px clamp(18px,3.5vw,58px) 64px}
-.subject-heading{padding:8px 0 28px;margin-bottom:22px;border-bottom:1px solid #dce4f0}
-.subject-heading h1{font-size:clamp(36px,4vw,54px);font-weight:800;letter-spacing:-1.8px;margin:8px 0 5px;color:#0a1d43}
-.subject-heading p{margin:0;color:#61718f;font-size:16px}
-.topic-meta{font-size:11px;letter-spacing:2px;font-weight:800;color:#6c83aa}
-.topics-grid{grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px}
-.topic-card{padding:0 0 20px;overflow:hidden;border:1px solid #dce5f2;border-radius:18px;min-height:300px;background:#fff;box-shadow:0 12px 35px #102b5810;gap:9px;transition:transform .3s,box-shadow .3s}
-.topic-card:hover{transform:translateY(-7px);box-shadow:0 22px 48px #102b5825;border-color:#9bb9e9}
-.topic-card .card-art{height:165px;width:100%;display:block;background-size:cover;background-position:center;position:relative;overflow:hidden}
-.topic-card .card-art:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#06153365,transparent 65%)}
-.topic-card small,.topic-card h3,.topic-card p,.topic-card .st{margin-left:20px;margin-right:20px}
-.topic-card small{font-size:10px;letter-spacing:1.5px;color:#6b7fa5;font-weight:800;margin-top:5px}
-.topic-card h3{font-size:19px;line-height:1.3;color:#102653;margin-top:0;margin-bottom:0}
-.topic-card p{font-size:13.5px;line-height:1.55;color:#697791;margin-top:0;margin-bottom:5px}
-.topic-card .st{margin-top:auto;color:#2869d2;font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
-.topic-card .st b{font-size:20px}
-.art-historia{background-image:url('assets/scene-historia.svg')}.art-servicios{background-image:url('assets/scene-servicios.svg')}.art-procesos{background-image:url('assets/scene-procesos.svg')}.art-cpu{background-image:url('assets/scene-cpu.svg')}.art-mensajes{background-image:url('assets/scene-mensajes.svg')}.art-memoria{background-image:url('assets/scene-memoria.svg')}
-.cv{height:clamp(340px,38vw,520px);border-radius:18px;background-color:#071638;background-size:cover;background-position:center;box-shadow:0 18px 45px #07163835;position:relative}
-.cv:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#07163808,#07163820)}
-.cv canvas{position:relative;z-index:1;filter:drop-shadow(0 10px 12px #020b2b55)}
-.scene-historia{background-image:url('assets/scene-historia.svg')}.scene-servicios{background-image:url('assets/scene-servicios.svg')}.scene-procesos{background-image:url('assets/scene-procesos.svg')}.scene-cpu{background-image:url('assets/scene-cpu.svg')}.scene-mensajes{background-image:url('assets/scene-mensajes.svg')}.scene-memoria{background-image:url('assets/scene-memoria.svg')}
-.pn{border:1px solid #dce5f1;border-radius:17px;box-shadow:0 12px 34px #102b580b;background:#fff}
-.view{gap:24px;grid-template-columns:minmax(0,1.35fr) minmax(320px,.9fr)}
-.stt{color:#102653;font-size:23px}.stx{color:#263653;font-size:16px;line-height:1.85}
-.sp i{height:6px;background:#e3eaf5}.sp i.on{background:#e9a43d}.sp i.dn{background:#244f9e}
-.casebox{background:linear-gradient(135deg,#fff,#f2f6ff);border-color:#d9e4f4;box-shadow:0 12px 32px #102b5809}
-.casebox h3{color:#102653;font-size:21px}.casebox p{font-size:15px;color:#4e5e7b}
-.btn{background:#153d87;border-radius:10px}.btn:hover{background:#2458b5}.btn.o{color:#153d87;border-color:#b9c9e1;background:#fff}
-nav button{border-radius:9px;padding:11px 10px}nav button.on{background:#ffffff1e;border-left-color:#ffc66b}
-@keyframes sceneFloat{0%,100%{background-position:center center}50%{background-position:51% 48%}}
-.cv.scene-historia,.cv.scene-servicios,.cv.scene-procesos,.cv.scene-cpu,.cv.scene-mensajes,.cv.scene-memoria{animation:sceneFloat 12s ease-in-out infinite}
-@media(max-width:1000px){.view{grid-template-columns:1fr}.topic-card .card-art{height:180px}}
-@media(max-width:600px){.subject-heading h1{font-size:34px}.topic-card .card-art{height:150px}.cv{height:330px}}
+    /* Diseño visual renovado: material académico, sin textos promocionales */
+    :root {
+      --nv: #071638;
+      --nv2: #173d87;
+      --bg: #f3f6fc;
+      --tx: #14213d;
+      --mu: #63718c;
+      --ac: #3979e8;
+      --am: #ffbd58
+    }
 
-</style></head><body>
-<aside><div class="brand" id="hm"><img src="assets/logo-unibe.png" alt="UNIB.E"><b>Sistemas Operativos<span>Laboratorio interactivo</span></b></div><nav id="nv"></nav><button class="pr" id="pr">Modo presentación</button></aside>
-<main id="app"></main>
-<script src="vendor/three.min.js"></script>
-<script>
-const $=(s,e=document)=>e.querySelector(s);let raf=0,iv=0,done=[];const TM=[];
-try{done=JSON.parse(localStorage.getItem('solab2')||'[]')}catch(e){}
-const clr=()=>{cancelAnimationFrame(raf);clearInterval(iv);TM.forEach(clearInterval);TM.length=0};
-function three(el,setup){
- if(typeof THREE==='undefined'){el.insertAdjacentHTML('afterbegin','<div class="rd">No se pudo cargar vendor/three.min.js. Verifica que la carpeta vendor esté junto a index.html.</div>');return}
- el.insertAdjacentHTML('afterbegin','<div class="cv"></div>');const cv=$('.cv',el),W=cv.clientWidth||700,H=cv.clientHeight||440;
- const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(50,W/H,.1,100);cam.position.set(0,4,8);cam.lookAt(0,0,0);
- const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(W,H,false);cv.appendChild(r.domElement);
- sc.add(new THREE.AmbientLight(0xffffff,.75));const pl=new THREE.PointLight(0xffffff,1);pl.position.set(5,8,6);sc.add(pl);
- const up=setup(sc,cam);(function f(){raf=requestAnimationFrame(f);up&&up();r.render(sc,cam)})();
-}
-const mat=(c,e=.3)=>new THREE.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:e});
-const lb=(sc,x,y,z=1.2,t='')=>{const c=document.createElement('canvas');c.width=256;c.height=64;const g=c.getContext('2d'),k=new THREE.CanvasTexture(c),p=new THREE.Sprite(new THREE.SpriteMaterial({map:k}));p.scale.set(3.2,.8,1);p.position.set(x,y,z);sc.add(p);p.set=v=>{g.clearRect(0,0,256,64);g.fillStyle='#fff';g.font='bold 34px Segoe UI,Arial,sans-serif';g.textAlign='center';g.fillText(v,128,44);k.needsUpdate=true};p.set(t);return p};
-const tx=(sc,t,x,y,z=1.2)=>lb(sc,x,y,z,t),sw=(cam,y=0)=>{cam.position.x=Math.sin(Date.now()/2500)*1.5;cam.lookAt(0,y,0)};
+    body {
+      background: linear-gradient(145deg, #f7f9fd, #edf2fa);
+      font-family: Inter, "Segoe UI", Arial, sans-serif
+    }
 
-/* 1 · Historia */
-const GEN=[['1945-55','Primera generación','Válvulas de vacío','No había sistema operativo; se programaba en lenguaje máquina.','ENIAC (1945), IBM 701 (1953)'],['1955-64','Segunda generación','Transistores','Aparecen los monitores del sistema y el procesamiento por lotes. GM-NAA I/O (1956) se considera el primer sistema operativo.','IBM 704, FORTRAN y COBOL'],['1965-68','Tercera generación','Circuitos integrados','Llega la multiprogramación: varios trabajos en memoria a la vez.','IBM OS/360 (anunciado en 1964, lanzado en 1966)'],['1965-80','Cuarta generación','Microprocesadores','Tiempo compartido, terminales, programas interactivos y máquinas virtuales.','Multics, UNIX (1970), VM/CMS, VMS (1978)'],['Desde 1980','Quinta generación','Ordenadores personales','Sistemas de escritorio, interfaces gráficas y multitarea.','MS-DOS (1981), Macintosh (1984), Linux (1991), Windows NT (1993)']];
-function labH(el){let sel=0;
- el.innerHTML='<div class="chips" id="ch"></div><div class="info" id="in"></div>';
- const draw=()=>{$('#ch').innerHTML=GEN.map((g,i)=>`<button class="${i==sel?'on':''}" data-i="${i}">${g[0]}</button>`).join('');const g=GEN[sel];$('#in').innerHTML=`<b>${g[1]}</b> · ${g[2]}<br>${g[3]}<br><span class="mu">Ejemplos: ${g[4]}</span>`};
- el.onclick=e=>{const b=e.target.closest('[data-i]');if(b){sel=+b.dataset.i;draw()}};draw();
- three(el,(sc,cam)=>{cam.position.set(0,5,12.5);const base=new THREE.Mesh(new THREE.BoxGeometry(16,.2,3),mat(0x3b4a8e,.1));base.position.y=-.1;sc.add(base);
-  const T=GEN.map((g,i)=>{const h=1.2+i*.9,m=new THREE.Mesh(new THREE.BoxGeometry(1.9,h,1.9),mat(0x5b8cff,.15));m.position.set(-6+i*3,h/2,0);sc.add(m);tx(sc,g[0],-6+i*3,-.8,1);return m});
-  const pt=new THREE.Mesh(new THREE.ConeGeometry(.3,.6,4),mat(0xe8a317,.8));pt.rotation.x=Math.PI;sc.add(pt);
-  return()=>{T.forEach((m,i)=>{const on=i==sel;m.material.emissiveIntensity+=((on?.9:.15)-m.material.emissiveIntensity)*.12;m.material.color.setHex(on?0x8fb0ff:0x5b8cff);m.scale.x=m.scale.z+=((on?1.12:1)-m.scale.x)*.12});
-   const h=1.2+sel*.9;pt.position.x+=(-6+sel*3-pt.position.x)*.12;pt.position.y=h+.8+Math.sin(Date.now()/300)*.15;pt.rotation.y+=.03;sw(cam,1.8)}});
- return i=>{sel=i;draw()};
-}
-/* 2 · Servicios */
-const SV=[['Asignación de recursos','e','Reparte la CPU, la memoria y el almacenamiento entre usuarios y trabajos para lograr la máxima eficacia.'],['Monitorización','e','Lleva la cuenta de qué recursos usa cada usuario y en qué cantidad: sirve para facturar, ajustar el rendimiento y poner límites.'],['Protección y seguridad','e','Controla el acceso a los recursos: un proceso no puede interferir con otro ni con el sistema. Además autentica a los usuarios.'],['Interfaz de usuario','u','Línea de comandos, proceso por lotes o interfaz gráfica. Varía entre sistemas, por eso se trata como servicio y no como componente básico.'],['Operaciones de E/S','u','Los programas no acceden directamente a los dispositivos: piden la operación al sistema, por eficiencia y protección.'],['Sistemas de archivos','u','Leer, escribir, crear, borrar y buscar archivos y directorios por nombre.'],['Comunicaciones','u','Intercambio de información entre procesos, en el mismo equipo o en equipos unidos por una red.'],['Detección de errores','u','Reacciona a fallos del hardware, de la E/S y de los programas (por ejemplo, un acceso ilegal a memoria) para mantener la computación consistente.']];
-function labS(el){let sel=0;
- el.innerHTML='<div class="chips" id="ch"></div><div class="info" id="in"></div>';
- const draw=()=>{$('#ch').innerHTML=SV.map((g,i)=>`<button class="${i==sel?'on':''}" data-i="${i}">${g[0]}</button>`).join('');$('#in').innerHTML=`<b>${SV[sel][0]}</b> <span class="mu">(${SV[sel][1]=='e'?'garantiza el funcionamiento eficiente':'útil para el usuario'})</span><br>${SV[sel][2]}`};
- el.onclick=e=>{const b=e.target.closest('[data-i]');if(b){sel=+b.dataset.i;draw()}};draw();
- three(el,(sc,cam)=>{cam.position.set(0,6,11);const G=new THREE.Group();sc.add(G);
-  const k=new THREE.Mesh(new THREE.BoxGeometry(1.8,1.8,1.8),mat(0xffffff,.35));G.add(k);tx(sc,'Núcleo',0,-1.6,0);
-  const O=SV.map((s,i)=>{const a=i/8*Math.PI*2,c=s[1]=='e'?0xe8a317:0x5b8cff,m=new THREE.Mesh(new THREE.SphereGeometry(.6),mat(c,.3));m.position.set(Math.cos(a)*4.4,0,Math.sin(a)*4.4);G.add(m);
-   const l=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),m.position.clone()]),new THREE.LineBasicMaterial({color:c}));G.add(l);const t=lb(G,m.position.x,1.3,m.position.z,s[0].split(' ')[0]);return{m,l,t}});
-  return()=>{G.rotation.y+=.003;k.rotation.y+=.01;O.forEach((o,i)=>{const on=i==sel;o.l.visible=on;o.m.scale.setScalar(o.m.scale.x+((on?1.5:1)-o.m.scale.x)*.12);o.m.material.emissiveIntensity=on?.9:.25});cam.lookAt(0,0,0)}});
- return i=>{sel=[0,0,3,3][i];draw()};
-}
-/* 3 · Procesos */
-function labP(el){const S=['Nuevo','Preparado','Ejecutando','Esperando','Terminado'],E=[['Admitir el proceso',0,1],['El planificador lo elige',1,2],['Pide E/S al disco',2,3],['Termina la E/S',3,1],['Se acaba su tiempo (timer)',2,1],['Llama a exit()',2,4]],X=[-6,-3,0,3,6];let s=0,pc=4096;
- el.innerHTML='<div class="evs" id="ev"></div><div class="rd" id="pcb"></div>';
- const draw=()=>{$('#ev').innerHTML=E.map((e,i)=>`<button data-i="${i}" ${e[1]!=s?'disabled':''}>${e[0]}</button>`).join('')+'<button class="g" id="rs">Reiniciar</button>';
-  $('#pcb').innerHTML=`<b>PCB (PID 4242)</b> · Estado: ${S[s]} · Contador de programa: <b id="pc">0x${pc.toString(16)}</b><br>${s==2?'Está en la CPU: el contador avanza.':'Fuera de la CPU: su contexto queda guardado en el PCB.'}<br>Solo se habilitan las transiciones posibles: desde Esperando nunca se salta directo a Ejecutando.`};
- el.onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;s=b.id=='rs'?0:E[b.dataset.i][2];draw()};draw();
- iv=setInterval(()=>{if(s==2){pc+=4;const x=$('#pc');if(x)x.textContent='0x'+pc.toString(16)}},250);
- three(el,(sc,cam)=>{cam.position.z=11;const pl=X.map((x,i)=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(.9,.9,.3,32),mat([0x5b8cff,0x5b8cff,0xe8a317,0xe86a8f,0x3ddc97][i],.15));m.position.x=x;sc.add(m);tx(sc,S[i],x,-.9,0);return m});
-  const b=new THREE.Mesh(new THREE.SphereGeometry(.5),mat(0xffffff,.6));b.position.set(-6,1,0);sc.add(b);
-  return()=>{b.position.x+=(X[s]-b.position.x)*.08;b.position.y=1+Math.abs(Math.sin(Date.now()/300))*.2;pl.forEach((m,i)=>m.material.emissiveIntensity=i==s?1:.15);sw(cam)}});
- return i=>{s=[0,1,2,3][i]||0;draw()};
-}
-/* 4 · Planificación */
-const PS=[[[0,24],[1,3],[2,3],[3,2]],[[0,6],[1,8],[2,7],[3,3]]],CL=['#2f6bff','#8a5cf6','#e8a317','#16905f'],C3=[0x5b8cff,0xa78bfa,0xe8a317,0x3ddc97];
-const HI={FCFS:'Efecto convoy: los procesos cortos esperan detrás del largo.',SJF:'El más corto primero minimiza el tiempo de espera promedio, pero necesita conocer la ráfaga.',SRTF:'Como SJF pero expropiativo: si llega uno más corto que lo que le queda al actual, lo desplaza.',RR:'Cada proceso usa la CPU como máximo un cuanto y vuelve al final de la cola.'};
-function sim(PD,alg,q){const P=PD.map(([a,b],i)=>({i,a,b,r:b,f:0}));let t=0,cur=null,qt=0,rq=[],g=[],n=0;
- while(n<P.length&&t<300){P.forEach(p=>{if(p.a==t)rq.push(p)});
-  if(cur&&alg=='RR'&&qt>=q){rq.push(cur);cur=null}
-  if(cur&&alg=='SRTF'&&rq.some(x=>x.r<cur.r)){rq.push(cur);cur=null}
-  if(!cur&&rq.length){if(alg=='FCFS'||alg=='RR')cur=rq.shift();else{cur=rq.reduce((m,x)=>x.r<m.r?x:m);rq.splice(rq.indexOf(cur),1)}qt=0}
-  if(cur){g.push(cur.i);cur.r--;qt++;if(!cur.r){cur.f=t+1;n++;cur=null}}else g.push(-1);t++}
- return{g,P}}
-function labC(el){
- el.innerHTML=`<div class="bar"><select id="al"><option>FCFS</option><option>SJF</option><option>SRTF</option><option>RR</option></select><select id="ps"><option value="0">Procesos: 24, 3, 3 y 2 ms</option><option value="1">Procesos: 6, 8, 7 y 3 ms</option></select><label id="ql" hidden>cuanto <input id="q" type="number" min="1" max="10" value="4" style="width:60px"></label><button id="go">Simular</button></div><div id="out"></div>`;
- let G,rev=0,tot=0;
- three(el,(sc,cam)=>{cam.position.set(0,7,10);G=new THREE.Group();sc.add(G);return()=>{if(rev<tot){rev+=.5;G.children.forEach(m=>{if(m.userData.t!=null)m.visible=m.userData.t<rev})}sw(cam)}});
- const run=()=>{const al=$('#al').value,{g,P}=sim(PS[$('#ps').value],al,+$('#q').value||4);$('#ql').hidden=al!='RR';
-  const w=P.map(p=>p.f-p.a-p.b),avg=(w.reduce((x,y)=>x+y,0)/w.length).toFixed(2);
-  if(G){G.clear();const n=g.length,u=.34,x0=-n*u/2;P.forEach((p,i)=>{const z=(i-1.5)*1.3;lb(G,x0-.9,.4,z,'P'+(i+1)).userData={};
-   for(let t=p.a;t<p.f;t++){const r=g[t]==i,m=new THREE.Mesh(new THREE.BoxGeometry(u*.92,r?1:.15,1),mat(r?C3[i]:0x6b7aa8,r?.35:.05));m.position.set(x0+t*u+u/2,r?.5:.08,z);m.userData={t};m.visible=false;G.add(m)}});rev=0;tot=n+4}
-  $('#out').innerHTML=`<table><tr><th></th><th>Llega</th><th>Ráfaga</th><th>Termina</th><th>Espera</th></tr>${P.map((p,i)=>`<tr><td style="color:${CL[i]}"><b>P${i+1}</b></td><td>${p.a}</td><td>${p.b}</td><td>${p.f}</td><td>${w[i]}</td></tr>`).join('')}</table><div class="rd"><b>Espera promedio: ${avg} ms</b><br>${HI[al]}<br>Cada fila es un proceso. Barra alta: usa la CPU. Barra baja: espera en la cola de preparados.</div>`};
- $('#go').onclick=run;$('#al').onchange=run;$('#ps').onchange=run;$('#q').onchange=run;run();
- return i=>{$('#al').selectedIndex=[0,1,2,3,3][i];run()};
-}
-/* 5 · Paso de mensajes */
-function labM(el){let q=[],pS=null,pR=false,n=0,msgs=[],A,B,sc0,say,rst;
- el.innerHTML=`<div class="bar"><button id="sd">Proceso A: send()</button><button id="rc">Proceso B: receive()</button><select id="cp"><option value="3">Búfer de 3 mensajes</option><option value="0">Sin búfer (capacidad 0)</option></select><select id="md"><option value="s">Síncrono (bloquea)</option><option value="a">Asíncrono (no bloquea)</option></select></div><div class="log" id="lg"></div>`;
- say=t=>$('#lg').innerHTML=t;
- three(el,(sc,cam)=>{sc0=sc;cam.position.set(0,5,11);
-  const mk=(x,c)=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(1,1,.4,32),mat(c,.2));m.position.x=x;sc.add(m);const s=new THREE.Mesh(new THREE.SphereGeometry(.55),mat(c,.7));s.position.set(x,1,0);sc.add(s);return{s,l:lb(sc,x,2.3,0,'')}};
-  A=mk(-6,0x5b8cff);B=mk(6,0x3ddc97);tx(sc,'Proceso A',-6,-.8,0);tx(sc,'Proceso B',6,-.8,0);
-  const kb=new THREE.Mesh(new THREE.BoxGeometry(8,.25,2.2),mat(0x8a97c8,.12));kb.position.y=-.05;sc.add(kb);tx(sc,'Núcleo: cola de mensajes',0,-.9,0);
-  const sl=[0,1,2].map(k=>{const m=new THREE.Mesh(new THREE.BoxGeometry(1.8,.1,1.5),mat(0x4a5a9a,.1));m.position.set(-2.4+k*2.4,.2,0);sc.add(m);return m});
-  return()=>{sl.forEach((s,k)=>s.visible=k<+$('#cp').value);
-   msgs.forEach(o=>{const m=o.m;let t=[-4.2,1,0],z=1;if(o.loc=='q')t=[-2.4+q.indexOf(o)*2.4,.7,0];else if(o.loc=='B')t=[4.2,1,0];else if(o.loc=='gone'){t=[6,1,0];z=.01}
-    m.position.x+=(t[0]-m.position.x)*.1;m.position.y+=(t[1]-m.position.y)*.1;m.scale.setScalar(m.scale.x+(z-m.scale.x)*.12);if(o.loc=='gone'&&m.scale.x<.03){sc.remove(m);o.dead=1}});
-   msgs=msgs.filter(o=>!o.dead);sw(cam)}});
- if(!A)return;
- const st=()=>{[[A,pS,'send()'],[B,pR,'receive()']].forEach(([p,b,f])=>{const c=b?0xe8463f:p==A?0x5b8cff:0x3ddc97;p.s.material.color.setHex(c);p.s.material.emissive.setHex(c);p.l.set(b?'bloqueado en '+f:'ejecutando')})};
- const newMsg=()=>{const m=new THREE.Mesh(new THREE.BoxGeometry(.9,.9,.9),mat(0xe8a317,.5));m.position.set(-5,1,0);sc0.add(m);const o={m,loc:'A',n:++n};msgs.push(o);return o};
- const deliver=o=>{o.loc='B';TM.push(setTimeout(()=>o.loc='gone',1300))};
- rst=()=>{msgs.forEach(o=>o.loc='gone');q=[];pS=null;pR=false;st();say('Pulsa send() varias veces: cuando el búfer se llena, A se bloquea. Luego pulsa receive().')};
- $('#sd').onclick=()=>{const as=$('#md').value=='a',C=+$('#cp').value;
-  if(pS)say('A ya está bloqueado esperando.');
-  else if(pR){const o=newMsg();pR=false;deliver(o);say(`send(): B estaba esperando y recibe el mensaje ${o.n} directamente. B se desbloquea.`)}
-  else if(q.length<C){const o=newMsg();q.push(o);o.loc='q';say(`send(): el mensaje ${o.n} entra al búfer (${q.length} de ${C}).`)}
-  else if(as)say('<b>EAGAIN</b>: el búfer está lleno y la operación no bloquea. A debe reintentar más tarde.');
-  else{const o=newMsg();pS=o;say('El búfer está lleno: A se <b>bloquea</b> en estado esperando hasta que B reciba.')}st()};
- $('#rc').onclick=()=>{const as=$('#md').value=='a';
-  if(pR)say('B ya está bloqueado esperando.');
-  else if(q.length){const o=q.shift();deliver(o);let t=`receive(): B recibe el mensaje ${o.n}.`;if(pS){q.push(pS);pS.loc='q';pS=null;t+=' A se desbloquea y su mensaje entra al búfer.'}say(t)}
-  else if(pS){const o=pS;pS=null;deliver(o);say(`receive(): B recibe el mensaje ${o.n} directamente de A, que se desbloquea.`)}
-  else if(as)say('<b>EAGAIN</b>: no hay mensajes y la operación no bloquea. B debe reintentar más tarde.');
-  else{pR=true;say('No hay mensajes: B se <b>bloquea</b> hasta que llegue uno.')}st()};
- $('#cp').onchange=rst;$('#md').onchange=rst;rst();
- return i=>{$('#cp').value=i==2?'0':'3';$('#md').value=i==3?'a':'s';rst()};
-}
-/* 6 · Memoria compartida */
-function labR(el){let pv={A:0,B:0},sh=0,run=0,L,cells,lg;
- el.innerHTML=`<div class="bar"><button id="b1">A escribe 42 en su memoria privada</button><button id="b2">A escribe 42 en la región compartida</button><button id="b3">B lee su memoria privada</button><button id="b4">B lee la región compartida</button></div><div class="bar"><label><input type="checkbox" id="sm"> Usar semáforo</label><button id="ex" class="g">Ejemplo del capítulo: el hijo duplica, el padre lee</button></div><div class="log" id="lg"></div>`;
- lg=t=>$('#lg').innerHTML=t;
- three(el,(sc,cam)=>{cam.position.set(0,5,11);
-  const col=(x,t)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(3,4.4,2.4),new THREE.MeshStandardMaterial({color:0x8fb0ff,transparent:true,opacity:.16}));m.position.set(x,2,0);sc.add(m);tx(sc,t,x,4.6,0);
-   const c=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.1,1.1),mat(0x5b8cff,.3));c.position.set(x,.8,0);sc.add(c);return{c,l:lb(sc,x,1.9,.9,'0')}};
-  const a=col(-5.5,'Espacio de A'),b=col(5.5,'Espacio de B');tx(sc,'memoria privada',-5.5,-.4,1.3);tx(sc,'memoria privada',5.5,-.4,1.3);
-  const slab=new THREE.Mesh(new THREE.BoxGeometry(3,.3,2.4),mat(0x3ddc97,.25));slab.position.set(0,.2,0);sc.add(slab);tx(sc,'Región compartida',0,-.4,1.3);
-  const s=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.1,1.1),mat(0x3ddc97,.4));s.position.set(0,.95,0);sc.add(s);const sl=lb(sc,0,2,.9,'0');
-  [-5.5,5.5].forEach(x=>sc.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,3.2,0),new THREE.Vector3(0,3.2,0),new THREE.Vector3(0,1.6,0)]),new THREE.LineBasicMaterial({color:0x3ddc97}))));tx(sc,'ambos procesos la ven',0,3.7,0);
-  const sp=new THREE.Mesh(new THREE.SphereGeometry(.28),mat(0xe8a317,.9));sp.visible=false;sc.add(sp);
-  cells={A:a,B:b,S:{c:s,l:sl},sp,p:{}};
-  return()=>{[a.c,b.c,s].forEach(m=>{const p=cells.p[m.uuid]||0;m.scale.setScalar(1+p*.4);cells.p[m.uuid]=p*.92});
-   if(cells.go){const g=cells.go;g.t+=.03;sp.visible=g.t<1;sp.position.set(g.f[0]+(g.to[0]-g.f[0])*g.t,g.f[1]+Math.sin(g.t*Math.PI)*1.2,0);if(g.t>=1)cells.go=0}sw(cam,1.5)}});
- if(!cells)return;
- const pl=m=>cells.p[m.uuid]=1,fly=(f,to)=>cells.go={f,to,t:0},up=()=>{cells.A.l.set(String(pv.A));cells.B.l.set(String(pv.B));cells.S.l.set(String(sh))};
- $('#b1').onclick=()=>{pv.A=42;up();pl(cells.A.c);lg('A escribió en su memoria privada. B tiene su propia copia, así que su valor sigue en 0. Es lo que pasa con MAP_PRIVATE tras un fork().')};
- $('#b2').onclick=()=>{sh=42;up();pl(cells.S.c);lg('A escribió en la región compartida: la memoria física es la misma para los dos, no se copia nada.')};
- $('#b3').onclick=()=>{pl(cells.B.c);fly([5.5,1.4],[5.5,2.6]);lg(`B lee su memoria privada y obtiene ${pv.B}: la escritura de A no llega hasta aquí.`)};
- $('#b4').onclick=()=>{pl(cells.S.c);fly([0,1.4],[5.5,1.4]);lg(`B lee la región compartida y obtiene ${sh}. Si A no escribió todavía, B lee el valor antiguo: hay que sincronizarse.`)};
- $('#ex').onclick=()=>{if(run)return;run=1;sh=1;up();const sem=$('#sm').checked;let w=0,r=0,o=[];lg('El hijo duplica el valor cada segundo; el padre lo lee...');
-  const rd=()=>{o.push(sh);pl(cells.S.c);fly([0,1.4],[5.5,1.4]);lg(`Padre lee: ${o.join(', ')}`);r++};
-  const fin=()=>{if(w<5||r<5)return;run=0;lg(sem?`Con semáforo el padre esperó cada sem_post() y leyó: ${o.join(', ')}. Un valor nuevo en cada lectura.`:`Sin semáforo el padre leyó a su ritmo: ${o.join(', ')}. Repite valores y se pierde resultados del hijo.`)};
-  TM.push(setInterval(function(){sh*=2;w++;up();pl(cells.S.c);if(sem)rd();if(w==5)clearInterval(this);fin()}.bind(null),1000));
-  if(!sem)TM.push(setInterval(()=>{if(r<5)rd();fin()},700))};
- up();lg('Prueba la diferencia entre escribir en memoria privada y en la región compartida.');
- return i=>{if(i==3)$('#sm').checked=true;lg('Ejecuta el ejemplo con y sin semáforo para comparar.')};
-}
-const IC={h:'<circle cx="20" cy="20" r="14"/><path d="M20 11v9l6 4"/>',s:'<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="22" y="6" width="12" height="12" rx="2"/><rect x="6" y="22" width="12" height="12" rx="2"/><rect x="22" y="22" width="12" height="12" rx="2"/>',p:'<rect x="9" y="9" width="22" height="22" rx="3"/><path d="M15 3v6M25 3v6M15 31v6M25 31v6M3 15h6M3 25h6M31 15h6M31 25h6"/>',c:'<path d="M5 32h30M8 28V16M16 28V8M24 28V20M32 28V12"/>',m:'<rect x="4" y="9" width="32" height="22" rx="2"/><path d="M4 11l16 11 16-11"/>',r:'<rect x="4" y="8" width="13" height="24" rx="2"/><rect x="23" y="8" width="13" height="24" rx="2"/><path d="M17 15h6M17 25h6"/>'};
-const T=[
-{cap:3,t:'Historia de los sistemas operativos',d:'Cinco generaciones, desde ENIAC hasta Linux.',ic:'h',run:labH,
- st:[['Primera generación (1945-55): sin sistema operativo','Los ordenadores usaban válvulas de vacío y se programaban directamente en lenguaje máquina. No existía ningún sistema operativo: quien programaba controlaba toda la máquina. ENIAC (1945) se usó para calcular tablas de tiro de artillería y el IBM 701 (1953) fue el primer ordenador comercial de IBM.'],['Segunda generación (1955-64): lotes y monitores','Con los transistores aparecen los monitores del sistema y el procesamiento por lotes: cargar y ejecutar un trabajo automáticamente cuando termina el anterior. GM-NAA I/O (1956), hecho por General Motors para el IBM 704, se considera el primer sistema operativo. Se usan ensamblador, FORTRAN y COBOL.'],['Tercera generación (1965-68): multiprogramación','Con los circuitos integrados llegan los sistemas multiprogramados. IBM OS/360, para el mainframe System/360, se anunció en 1964 y salió en 1966, con un año de retraso. Fue un proyecto tan grande que ayudó a dar forma a la ingeniería del software.'],['Cuarta generación (1965-80): tiempo compartido','Los microprocesadores traen el tiempo compartido, los terminales, los programas interactivos y las máquinas virtuales. Multics introdujo el sistema de archivos jerárquico y de él nació UNIX (1970): muchas herramientas pequeñas que trabajan juntas y dispositivos tratados como archivos. VM/CMS de IBM virtualizó el hardware.'],['Quinta generación (desde 1980): el ordenador personal','Aparecen los sistemas de escritorio y las interfaces gráficas. MS-DOS (1981) no tenía modo dual, así que el error de una aplicación podía tumbar todo el sistema. Macintosh (1984) popularizó la interfaz gráfica, Linux (1991) unió el núcleo de Linus Torvalds con las herramientas GNU y Windows NT (1993) trajo un sistema moderno.']],
- q:[['¿Cuál se considera el primer sistema operativo?',['ENIAC','GM-NAA I/O','UNIX'],1],['¿Qué característica faltaba en MS-DOS?',['Interfaz de línea de comandos','Operación en modo dual','Sistema de archivos'],1]]},
-{cap:5,t:'Servicios del sistema',d:'Qué ofrece el sistema operativo a programas y usuarios.',ic:'s',run:labS,
- st:[['Qué es un servicio','El sistema operativo proporciona un entorno para ejecutar programas, y lo hace con servicios que ofrecen sus componentes trabajando de forma coordinada. Se agrupan en dos familias: los que garantizan un funcionamiento eficiente y los que son útiles para el usuario. Pulsa cada esfera para ver el detalle.'],['Servicios de eficiencia (esferas ámbar)','Asignación de recursos (CPU, memoria y archivos), monitorización (quién usa qué recurso y en qué cantidad) y protección y seguridad (que nadie acceda a lo que no debe, ni otros usuarios ni agentes externos).'],['Servicios para el usuario (esferas azules)','Interfaz de usuario, operaciones de E/S, sistemas de archivos, comunicaciones y detección de errores. Los programas no tocan los dispositivos directamente: piden la operación al sistema, por eficiencia y protección.'],['La interfaz de usuario','Puede ser de línea de comandos (la shell), de proceso por lotes (scripts) o gráfica. Como cambia de un sistema a otro y de un usuario a otro, se trata como un servicio y no como componente básico. Además hay programas del sistema, como compiladores o gestores de archivos.']],
- q:[['Una universidad quiere cobrar por el tiempo de CPU de cada usuario. ¿Qué servicio lo hace posible?',['Asignación de recursos','Monitorización','Protección y seguridad'],1],['¿Por qué un programa no escribe directamente en la impresora?',['Por eficiencia y protección, el sistema media el acceso','Porque la impresora solo la maneja la shell','Porque la CPU no puede enviar datos'],0]]},
-{cap:9,t:'Procesos',d:'Estados, PCB y cambio de contexto.',ic:'p',run:labP,
- st:[['Programa y proceso','Un programa es un archivo ejecutable; un proceso es ese programa en ejecución. Incluye código, datos, BSS, pila (variables locales), montón (memoria dinámica) y su estado de ejecución. Dos procesos del mismo programa comparten el código, pero todo lo demás es propio de cada uno.'],['Los cinco estados','Nuevo, preparado, ejecutando, esperando y terminado. Solo un proceso por CPU está ejecutando. Cuando termina una operación de E/S, el proceso pasa de esperando a preparado, nunca directamente a ejecutando. Mueve la esfera con los botones.'],['El PCB','Es la ficha del proceso dentro del sistema: PID, estado, contador de programa, registros de la CPU, datos de planificación, de memoria y de E/S. Mientras ejecuta, el contador está en la CPU y solo se copia al PCB cuando el proceso sale de ella.'],['Cambio de contexto','Para darle la CPU a otro proceso, el sistema guarda el estado del actual en su PCB y carga el del siguiente. Es sobrecarga pura: mientras ocurre, ningún proceso avanza.']],
- q:[['Un proceso esperando termina su lectura de disco. ¿A qué estado pasa?',['Ejecutando','Preparado','Terminado'],1],['Mientras un proceso ejecuta, ¿dónde está su contador de programa?',['En su PCB','En la pila','En un registro de la CPU'],2]]},
-{cap:10,t:'Planificación de la CPU',d:'FCFS, SJF, SRTF y Round Robin en un Gantt 3D.',ic:'c',run:labC,
- st:[['FCFS: el primero que llega','Cola FIFO sin expropiación. Si un proceso largo llega primero, los cortos esperan detrás: es el efecto convoy. Con el ejemplo de 24, 3, 3 y 2 ms la espera promedio es de 18,75 ms.'],['SJF: el más corto primero','Elige el proceso con la ráfaga más corta y da el menor tiempo de espera promedio. El problema es que el sistema no conoce la ráfaga de antemano y tiene que estimarla.'],['SRTF: SJF con expropiación','Si llega un proceso con menos tiempo que el que le queda al actual, lo expropia. Suele mejorar el tiempo de respuesta, a costa de más cambios de contexto.'],['Round Robin: turnos con cuanto','Cada proceso usa la CPU hasta un cuanto y vuelve al final de la cola. Prueba cuantos distintos: si es muy grande se parece a FCFS y si es muy pequeño se pierde tiempo en cambios de contexto.'],['Cómo se compara un algoritmo','Se mide con el uso de CPU, la tasa de procesamiento, el tiempo de ejecución, el de espera y el de respuesta. En sistemas interactivos importa más que la respuesta sea predecible que su promedio.']],
- q:[['¿Qué algoritmo da el menor tiempo de espera promedio?',['FCFS','SJF','Round Robin'],1],['¿Qué pasa en Round Robin si el cuanto es mayor que todas las ráfagas?',['Se comporta como FCFS','Se comporta como SJF','Mejora el tiempo de espera'],0]]},
-{cap:11,t:'Paso de mensajes',d:'send(), receive(), búfer y bloqueo, en 3D.',ic:'m',run:labM,
- st:[['Procesos cooperativos','Los procesos que comparten datos se afectan entre sí y se llaman cooperativos. Para comunicarse hay dos estrategias: memoria compartida o paso de mensajes. Con mensajes, el sistema operativo entrega los datos y se encarga de la sincronización: solo hacen falta send() y receive().'],['Comunicación directa o indirecta','En la directa se nombra al proceso (su PID) y, si cambia, hay que actualizar todas las referencias. En la indirecta se usan buzones o puertos, así los procesos no dependen de identificadores. Las colas de mensajes POSIX son indirectas.'],['Búfer de capacidad cero o limitada','Sin búfer, el emisor se bloquea hasta que el receptor reciba. Con capacidad limitada, solo se bloquea cuando la cola se llena. Un búfer infinito no existe, porque los recursos son limitados. Prueba ambos en la escena.'],['Síncrono o asíncrono','Síncrono: el proceso se bloquea si la cola está llena (al enviar) o vacía (al recibir). Asíncrono: nunca bloquea y devuelve un error para reintentar; en POSIX es -1 con EAGAIN si se abre la cola con O_NONBLOCK.'],['Mecanismos reales','Colas de mensajes POSIX (indirectas, tamaño variable y capacidad limitada), señales (directas, tamaño fijo: solo indican un evento), tuberías (flujo de bytes que no separa los mensajes) y sockets (con AF_INET llegan a procesos de otros ordenadores).']],
- q:[['Con un búfer lleno y envío síncrono, ¿qué ocurre?',['El mensaje se pierde','El emisor se bloquea hasta que haya hueco','El receptor se bloquea'],1],['¿Qué ventaja da la comunicación indirecta?',['Los procesos no dependen del PID del otro','Los mensajes siempre son más rápidos','No necesita sistema operativo'],0]]},
-{cap:12,t:'Memoria compartida',d:'Dos procesos, una misma región de memoria.',ic:'r',run:labR,
- st:[['Qué es','Un proceso gana acceso a una región de la memoria de otro, algo que el sistema operativo normalmente evita. Los dos procesos deben acordar compartirla y después leen y escriben en ella sin copiar datos.'],['Responsabilidad de los procesos','La estructura de los datos y la sincronización las deciden los procesos, no el sistema. Sus ventajas son la eficiencia (velocidad de la memoria principal) y la conveniencia (solo hay que leer y escribir).'],['Anónima y con nombre','La anónima se crea con mmap() y MAP_SHARED y se comparte con los hijos mediante fork(). La que tiene nombre se abre con shm_open() y la ve cualquier proceso con permisos. Con MAP_PRIVATE cada proceso tiene su propia copia: pruébalo con el botón de memoria privada.'],['Sincronizar con un semáforo','En el ejemplo del capítulo el hijo duplica un valor y el padre lo lee. Sin sincronizar, el padre lee a su ritmo y repite valores. Con sem_wait() y sem_post(), el padre espera cada resultado nuevo.']],
- q:[['Un hijo escribe 42 en una región mmap() con MAP_PRIVATE. ¿Qué lee el padre?',['42','0, porque el hijo escribió en su copia','Un error'],1],['Dos programas lanzados por separado quieren compartir memoria. ¿Qué usan?',['shm_open() con el mismo nombre','mmap() anónimo','fork()'],0]]}
-];
-const CASES=[
- {title:'El ordenador de una sala de cómputo',situation:'Una institución pasa de equipos que se programaban manualmente a ordenadores que ejecutan trabajos de muchos estudiantes. ¿Qué cambios históricos explican que hoy podamos abrir varias aplicaciones y alternar entre ellas?',answer:'La evolución fue acumulativa: los monitores y el procesamiento por lotes automatizaron trabajos; la multiprogramación aprovechó la CPU mientras otro trabajo esperaba; el tiempo compartido permitió interacción entre varios usuarios; y los sistemas personales popularizaron las interfaces gráficas y la multitarea.'},
- {title:'Un laboratorio con recursos compartidos',situation:'En un laboratorio, varios programas quieren usar la CPU, la memoria, una impresora y archivos al mismo tiempo. ¿Por qué no conviene que cada programa controle directamente el hardware?',answer:'El sistema operativo actúa como coordinador. Asigna recursos, registra su uso, protege los procesos y media las operaciones de entrada/salida. Así evita conflictos, accesos indebidos y desperdicio de recursos.'},
- {title:'Dos aplicaciones abiertas al mismo tiempo',situation:'Estás en una videollamada y abres un navegador. El sistema alterna entre ambos, pero uno queda esperando mientras recibe datos de la red. ¿Qué ocurre con sus estados?',answer:'Cada aplicación en ejecución es un proceso independiente. El planificador puede sacar de la CPU al proceso que estaba ejecutando y guardar su contexto en el PCB. Si espera una operación de E/S pasa a esperando; cuando esta termina vuelve a preparado y podrá ser elegido para ejecutar.'},
- {title:'La CPU es una sola, pero hay muchas tareas',situation:'Cuatro procesos llegan casi al mismo tiempo. Uno necesita 24 ms y los demás solo 3, 3 y 2 ms. ¿Qué efecto puede producir FCFS y cómo cambia la experiencia con Round Robin?',answer:'Con FCFS, si el proceso largo llega primero, los cortos esperan detrás: es el efecto convoy. Round Robin reparte la CPU en turnos de duración limitada (cuanto), lo que mejora la capacidad de respuesta percibida en sistemas interactivos, aunque un cuanto demasiado pequeño aumenta el coste de los cambios de contexto.'},
- {title:'Dos procesos deben coordinarse',situation:'Un proceso produce mensajes y otro los consume. La cola tiene capacidad limitada y se llena. ¿Qué sucede con un envío síncrono y qué cambia con uno asíncrono?',answer:'En el modo síncrono, el emisor queda bloqueado hasta que exista espacio en la cola. En el modo asíncrono, la llamada no espera: informa que no pudo enviar (por ejemplo, EAGAIN) y el proceso decide cuándo reintentar. El receptor también puede bloquearse si espera un mensaje en una cola vacía.'},
- {title:'Compartir datos sin duplicarlos',situation:'Un proceso hijo actualiza un contador y el proceso padre necesita leer cada nuevo valor. ¿Por qué compartir memoria no basta para garantizar que el padre lea los datos en el orden correcto?',answer:'La región compartida permite que ambos accedan a los mismos datos, pero no define por sí sola el orden de lectura y escritura. Hace falta sincronización. Un semáforo puede coordinar al productor y al consumidor: el hijo señala que publicó un valor y el padre espera esa señal antes de leerlo.'}
-];
-const OUTCOMES=[
- 'Reconocer los hitos que llevaron de la ejecución manual a los sistemas actuales.',
- 'Explicar cómo el sistema operativo coordina recursos y ofrece servicios.',
- 'Distinguir programa, proceso, estados, PCB y cambio de contexto.',
- 'Comparar algoritmos de planificación y observar sus efectos en una línea de tiempo.',
- 'Describir la comunicación entre procesos mediante send(), receive() y búferes.',
- 'Diferenciar memoria privada y compartida, e identificar por qué se necesita sincronización.'
-];
-let cur=-1;
-function nav(){$('#nv').innerHTML=T.map((x,i)=>`<button class="${i==cur?'on':''}" data-i="${i}"><span style="opacity:.65;font-size:11px">0${i+1}</span>${x.t}<i class="${done.includes(i)?'d':''}"></i></button>`).join('')}
-function home(){clr();cur=-1;nav();$('#app').innerHTML=`
+    aside {
+      background: linear-gradient(180deg, #07142f 0%, #0c2454 55%, #102d69 100%);
+      box-shadow: 10px 0 35px #071b3a24
+    }
+
+    .brand img {
+      width: 62px;
+      height: 62px;
+      filter: drop-shadow(0 6px 12px #0005)
+    }
+
+    main {
+      max-width: 1740px;
+      padding: 34px clamp(18px, 3.5vw, 58px) 64px
+    }
+
+    .subject-heading {
+      padding: 8px 0 28px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid #dce4f0
+    }
+
+    .subject-heading h1 {
+      font-size: clamp(36px, 4vw, 54px);
+      font-weight: 800;
+      letter-spacing: -1.8px;
+      margin: 8px 0 5px;
+      color: #0a1d43
+    }
+
+    .subject-heading p {
+      margin: 0;
+      color: #61718f;
+      font-size: 16px
+    }
+
+    .topic-meta {
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 800;
+      color: #6c83aa
+    }
+
+    .topics-grid {
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 22px
+    }
+
+    .topic-card {
+      padding: 0 0 20px;
+      overflow: hidden;
+      border: 1px solid #dce5f2;
+      border-radius: 18px;
+      min-height: 300px;
+      background: #fff;
+      box-shadow: 0 12px 35px #102b5810;
+      gap: 9px;
+      transition: transform .3s, box-shadow .3s
+    }
+
+    .topic-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 22px 48px #102b5825;
+      border-color: #9bb9e9
+    }
+
+    .topic-card .card-art {
+      height: 165px;
+      width: 100%;
+      display: block;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden
+    }
+
+    .topic-card .card-art:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, #06153365, transparent 65%)
+    }
+
+    .topic-card small,
+    .topic-card h3,
+    .topic-card p,
+    .topic-card .st {
+      margin-left: 20px;
+      margin-right: 20px
+    }
+
+    .topic-card small {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: #6b7fa5;
+      font-weight: 800;
+      margin-top: 5px
+    }
+
+    .topic-card h3 {
+      font-size: 19px;
+      line-height: 1.3;
+      color: #102653;
+      margin-top: 0;
+      margin-bottom: 0
+    }
+
+    .topic-card p {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #697791;
+      margin-top: 0;
+      margin-bottom: 5px
+    }
+
+    .topic-card .st {
+      margin-top: auto;
+      color: #2869d2;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .topic-card .st b {
+      font-size: 20px
+    }
+
+    .art-historia {
+      background-image: url('assets/scene-historia.svg')
+    }
+
+    .art-servicios {
+      background-image: url('assets/scene-servicios.svg')
+    }
+
+    .art-procesos {
+      background-image: url('assets/scene-procesos.svg')
+    }
+
+    .art-cpu {
+      background-image: url('assets/scene-cpu.svg')
+    }
+
+    .art-mensajes {
+      background-image: url('assets/scene-mensajes.svg')
+    }
+
+    .art-memoria {
+      background-image: url('assets/scene-memoria.svg')
+    }
+
+    .cv {
+      height: clamp(340px, 38vw, 520px);
+      border-radius: 18px;
+      background-color: #071638;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 18px 45px #07163835;
+      position: relative
+    }
+
+    .cv:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, #07163808, #07163820)
+    }
+
+    .cv canvas {
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 10px 12px #020b2b55)
+    }
+
+    .scene-historia {
+      background-image: url('assets/scene-historia.svg')
+    }
+
+    .scene-servicios {
+      background-image: url('assets/scene-servicios.svg')
+    }
+
+    .scene-procesos {
+      background-image: url('assets/scene-procesos.svg')
+    }
+
+    .scene-cpu {
+      background-image: url('assets/scene-cpu.svg')
+    }
+
+    .scene-mensajes {
+      background-image: url('assets/scene-mensajes.svg')
+    }
+
+    .scene-memoria {
+      background-image: url('assets/scene-memoria.svg')
+    }
+
+    .pn {
+      border: 1px solid #dce5f1;
+      border-radius: 17px;
+      box-shadow: 0 12px 34px #102b580b;
+      background: #fff
+    }
+
+    .view {
+      gap: 24px;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, .9fr)
+    }
+
+    .stt {
+      color: #102653;
+      font-size: 23px
+    }
+
+    .stx {
+      color: #263653;
+      font-size: 16px;
+      line-height: 1.85
+    }
+
+    .sp i {
+      height: 6px;
+      background: #e3eaf5
+    }
+
+    .sp i.on {
+      background: #e9a43d
+    }
+
+    .sp i.dn {
+      background: #244f9e
+    }
+
+    .casebox {
+      background: linear-gradient(135deg, #fff, #f2f6ff);
+      border-color: #d9e4f4;
+      box-shadow: 0 12px 32px #102b5809
+    }
+
+    .casebox h3 {
+      color: #102653;
+      font-size: 21px
+    }
+
+    .casebox p {
+      font-size: 15px;
+      color: #4e5e7b
+    }
+
+    .btn {
+      background: #153d87;
+      border-radius: 10px
+    }
+
+    .btn:hover {
+      background: #2458b5
+    }
+
+    .btn.o {
+      color: #153d87;
+      border-color: #b9c9e1;
+      background: #fff
+    }
+
+    nav button {
+      border-radius: 9px;
+      padding: 11px 10px
+    }
+
+    nav button.on {
+      background: #ffffff1e;
+      border-left-color: #ffc66b
+    }
+
+    @keyframes sceneFloat {
+
+      0%,
+      100% {
+        background-position: center center
+      }
+
+      50% {
+        background-position: 51% 48%
+      }
+    }
+
+    .cv.scene-historia,
+    .cv.scene-servicios,
+    .cv.scene-procesos,
+    .cv.scene-cpu,
+    .cv.scene-mensajes,
+    .cv.scene-memoria {
+      animation: sceneFloat 12s ease-in-out infinite
+    }
+
+    @media(max-width:1000px) {
+      .view {
+        grid-template-columns: 1fr
+      }
+
+      .topic-card .card-art {
+        height: 180px
+      }
+    }
+
+    @media(max-width:600px) {
+      .subject-heading h1 {
+        font-size: 34px
+      }
+
+      .topic-card .card-art {
+        height: 150px
+      }
+
+      .cv {
+        height: 330px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <aside>
+    <div class="brand" id="hm"><img src="assets/logo-unibe.png" alt="UNIB.E"><b>Sistemas Operativos<span>Laboratorio
+          interactivo</span></b></div>
+    <nav id="nv"></nav><button class="pr" id="pr">Modo presentación</button>
+  </aside>
+  <main id="app"></main>
+  <script src="vendor/three.min.js"></script>
+  <script>
+    const $ = (s, e = document) => e.querySelector(s); let raf = 0, iv = 0, done = []; const TM = [];
+    try { done = JSON.parse(localStorage.getItem('solab2') || '[]') } catch (e) { }
+    const clr = () => { cancelAnimationFrame(raf); clearInterval(iv); TM.forEach(clearInterval); TM.length = 0 };
+    function three(el, setup) {
+      if (typeof THREE === 'undefined') { el.insertAdjacentHTML('afterbegin', '<div class="rd">No se pudo cargar vendor/three.min.js. Verifica que la carpeta vendor esté junto a index.html.</div>'); return }
+      el.insertAdjacentHTML('afterbegin', '<div class="cv"></div>'); const cv = $('.cv', el), W = cv.clientWidth || 700, H = cv.clientHeight || 440;
+      const sc = new THREE.Scene(), cam = new THREE.PerspectiveCamera(50, W / H, .1, 100); cam.position.set(0, 4, 8); cam.lookAt(0, 0, 0);
+      const r = new THREE.WebGLRenderer({ antialias: true, alpha: true }); r.setSize(W, H, false); cv.appendChild(r.domElement);
+      sc.add(new THREE.AmbientLight(0xffffff, .75)); const pl = new THREE.PointLight(0xffffff, 1); pl.position.set(5, 8, 6); sc.add(pl);
+      const up = setup(sc, cam); (function f() { raf = requestAnimationFrame(f); up && up(); r.render(sc, cam) })();
+    }
+    const mat = (c, e = .3) => new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: e });
+    const lb = (sc, x, y, z = 1.2, t = '') => { const c = document.createElement('canvas'); c.width = 256; c.height = 64; const g = c.getContext('2d'), k = new THREE.CanvasTexture(c), p = new THREE.Sprite(new THREE.SpriteMaterial({ map: k })); p.scale.set(3.2, .8, 1); p.position.set(x, y, z); sc.add(p); p.set = v => { g.clearRect(0, 0, 256, 64); g.fillStyle = '#fff'; g.font = 'bold 34px Segoe UI,Arial,sans-serif'; g.textAlign = 'center'; g.fillText(v, 128, 44); k.needsUpdate = true }; p.set(t); return p };
+    const tx = (sc, t, x, y, z = 1.2) => lb(sc, x, y, z, t), sw = (cam, y = 0) => { cam.position.x = Math.sin(Date.now() / 2500) * 1.5; cam.lookAt(0, y, 0) };
+
+    /* 1 · Historia */
+    const GEN = [['1945-55', 'Primera generación', 'Válvulas de vacío', 'No había sistema operativo; se programaba en lenguaje máquina.', 'ENIAC (1945), IBM 701 (1953)'], ['1955-64', 'Segunda generación', 'Transistores', 'Aparecen los monitores del sistema y el procesamiento por lotes. GM-NAA I/O (1956) se considera el primer sistema operativo.', 'IBM 704, FORTRAN y COBOL'], ['1965-68', 'Tercera generación', 'Circuitos integrados', 'Llega la multiprogramación: varios trabajos en memoria a la vez.', 'IBM OS/360 (anunciado en 1964, lanzado en 1966)'], ['1965-80', 'Cuarta generación', 'Microprocesadores', 'Tiempo compartido, terminales, programas interactivos y máquinas virtuales.', 'Multics, UNIX (1970), VM/CMS, VMS (1978)'], ['Desde 1980', 'Quinta generación', 'Ordenadores personales', 'Sistemas de escritorio, interfaces gráficas y multitarea.', 'MS-DOS (1981), Macintosh (1984), Linux (1991), Windows NT (1993)']];
+    function labH(el) {
+      let sel = 0;
+      el.innerHTML = '<div class="chips" id="ch"></div><div class="info" id="in"></div>';
+      const draw = () => { $('#ch').innerHTML = GEN.map((g, i) => `<button class="${i == sel ? 'on' : ''}" data-i="${i}">${g[0]}</button>`).join(''); const g = GEN[sel]; $('#in').innerHTML = `<b>${g[1]}</b> · ${g[2]}<br>${g[3]}<br><span class="mu">Ejemplos: ${g[4]}</span>` };
+      el.onclick = e => { const b = e.target.closest('[data-i]'); if (b) { sel = +b.dataset.i; draw() } }; draw();
+      three(el, (sc, cam) => {
+        cam.position.set(0, 5, 12.5); const base = new THREE.Mesh(new THREE.BoxGeometry(16, .2, 3), mat(0x3b4a8e, .1)); base.position.y = -.1; sc.add(base);
+        const T = GEN.map((g, i) => { const h = 1.2 + i * .9, m = new THREE.Mesh(new THREE.BoxGeometry(1.9, h, 1.9), mat(0x5b8cff, .15)); m.position.set(-6 + i * 3, h / 2, 0); sc.add(m); tx(sc, g[0], -6 + i * 3, -.8, 1); return m });
+        const pt = new THREE.Mesh(new THREE.ConeGeometry(.3, .6, 4), mat(0xe8a317, .8)); pt.rotation.x = Math.PI; sc.add(pt);
+        return () => {
+          T.forEach((m, i) => { const on = i == sel; m.material.emissiveIntensity += ((on ? .9 : .15) - m.material.emissiveIntensity) * .12; m.material.color.setHex(on ? 0x8fb0ff : 0x5b8cff); m.scale.x = m.scale.z += ((on ? 1.12 : 1) - m.scale.x) * .12 });
+          const h = 1.2 + sel * .9; pt.position.x += (-6 + sel * 3 - pt.position.x) * .12; pt.position.y = h + .8 + Math.sin(Date.now() / 300) * .15; pt.rotation.y += .03; sw(cam, 1.8)
+        }
+      });
+      return i => { sel = i; draw() };
+    }
+    /* 2 · Servicios */
+    const SV = [['Asignación de recursos', 'e', 'Reparte la CPU, la memoria y el almacenamiento entre usuarios y trabajos para lograr la máxima eficacia.'], ['Monitorización', 'e', 'Lleva la cuenta de qué recursos usa cada usuario y en qué cantidad: sirve para facturar, ajustar el rendimiento y poner límites.'], ['Protección y seguridad', 'e', 'Controla el acceso a los recursos: un proceso no puede interferir con otro ni con el sistema. Además autentica a los usuarios.'], ['Interfaz de usuario', 'u', 'Línea de comandos, proceso por lotes o interfaz gráfica. Varía entre sistemas, por eso se trata como servicio y no como componente básico.'], ['Operaciones de E/S', 'u', 'Los programas no acceden directamente a los dispositivos: piden la operación al sistema, por eficiencia y protección.'], ['Sistemas de archivos', 'u', 'Leer, escribir, crear, borrar y buscar archivos y directorios por nombre.'], ['Comunicaciones', 'u', 'Intercambio de información entre procesos, en el mismo equipo o en equipos unidos por una red.'], ['Detección de errores', 'u', 'Reacciona a fallos del hardware, de la E/S y de los programas (por ejemplo, un acceso ilegal a memoria) para mantener la computación consistente.']];
+    function labS(el) {
+      let sel = 0;
+      el.innerHTML = '<div class="chips" id="ch"></div><div class="info" id="in"></div>';
+      const draw = () => { $('#ch').innerHTML = SV.map((g, i) => `<button class="${i == sel ? 'on' : ''}" data-i="${i}">${g[0]}</button>`).join(''); $('#in').innerHTML = `<b>${SV[sel][0]}</b> <span class="mu">(${SV[sel][1] == 'e' ? 'garantiza el funcionamiento eficiente' : 'útil para el usuario'})</span><br>${SV[sel][2]}` };
+      el.onclick = e => { const b = e.target.closest('[data-i]'); if (b) { sel = +b.dataset.i; draw() } }; draw();
+      three(el, (sc, cam) => {
+        cam.position.set(0, 6, 11); const G = new THREE.Group(); sc.add(G);
+        const k = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.8, 1.8), mat(0xffffff, .35)); G.add(k); tx(sc, 'Núcleo', 0, -1.6, 0);
+        const O = SV.map((s, i) => {
+          const a = i / 8 * Math.PI * 2, c = s[1] == 'e' ? 0xe8a317 : 0x5b8cff, m = new THREE.Mesh(new THREE.SphereGeometry(.6), mat(c, .3)); m.position.set(Math.cos(a) * 4.4, 0, Math.sin(a) * 4.4); G.add(m);
+          const l = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), m.position.clone()]), new THREE.LineBasicMaterial({ color: c })); G.add(l); const t = lb(G, m.position.x, 1.3, m.position.z, s[0].split(' ')[0]); return { m, l, t }
+        });
+        return () => { G.rotation.y += .003; k.rotation.y += .01; O.forEach((o, i) => { const on = i == sel; o.l.visible = on; o.m.scale.setScalar(o.m.scale.x + ((on ? 1.5 : 1) - o.m.scale.x) * .12); o.m.material.emissiveIntensity = on ? .9 : .25 }); cam.lookAt(0, 0, 0) }
+      });
+      return i => { sel = [0, 0, 3, 3][i]; draw() };
+    }
+    /* 3 · Procesos */
+    function labP(el) {
+      const S = ['Nuevo', 'Preparado', 'Ejecutando', 'Esperando', 'Terminado'], E = [['Admitir el proceso', 0, 1], ['El planificador lo elige', 1, 2], ['Pide E/S al disco', 2, 3], ['Termina la E/S', 3, 1], ['Se acaba su tiempo (timer)', 2, 1], ['Llama a exit()', 2, 4]], X = [-6, -3, 0, 3, 6]; let s = 0, pc = 4096;
+      el.innerHTML = '<div class="evs" id="ev"></div><div class="rd" id="pcb"></div>';
+      const draw = () => {
+        $('#ev').innerHTML = E.map((e, i) => `<button data-i="${i}" ${e[1] != s ? 'disabled' : ''}>${e[0]}</button>`).join('') + '<button class="g" id="rs">Reiniciar</button>';
+        $('#pcb').innerHTML = `<b>PCB (PID 4242)</b> · Estado: ${S[s]} · Contador de programa: <b id="pc">0x${pc.toString(16)}</b><br>${s == 2 ? 'Está en la CPU: el contador avanza.' : 'Fuera de la CPU: su contexto queda guardado en el PCB.'}<br>Solo se habilitan las transiciones posibles: desde Esperando nunca se salta directo a Ejecutando.`
+      };
+      el.onclick = e => { const b = e.target.closest('button'); if (!b || b.disabled) return; s = b.id == 'rs' ? 0 : E[b.dataset.i][2]; draw() }; draw();
+      iv = setInterval(() => { if (s == 2) { pc += 4; const x = $('#pc'); if (x) x.textContent = '0x' + pc.toString(16) } }, 250);
+      three(el, (sc, cam) => {
+        cam.position.z = 11; const pl = X.map((x, i) => { const m = new THREE.Mesh(new THREE.CylinderGeometry(.9, .9, .3, 32), mat([0x5b8cff, 0x5b8cff, 0xe8a317, 0xe86a8f, 0x3ddc97][i], .15)); m.position.x = x; sc.add(m); tx(sc, S[i], x, -.9, 0); return m });
+        const b = new THREE.Mesh(new THREE.SphereGeometry(.5), mat(0xffffff, .6)); b.position.set(-6, 1, 0); sc.add(b);
+        return () => { b.position.x += (X[s] - b.position.x) * .08; b.position.y = 1 + Math.abs(Math.sin(Date.now() / 300)) * .2; pl.forEach((m, i) => m.material.emissiveIntensity = i == s ? 1 : .15); sw(cam) }
+      });
+      return i => { s = [0, 1, 2, 3][i] || 0; draw() };
+    }
+    /* 4 · Planificación */
+    const PS = [[[0, 24], [1, 3], [2, 3], [3, 2]], [[0, 6], [1, 8], [2, 7], [3, 3]]], CL = ['#2f6bff', '#8a5cf6', '#e8a317', '#16905f'], C3 = [0x5b8cff, 0xa78bfa, 0xe8a317, 0x3ddc97];
+    const HI = { FCFS: 'Efecto convoy: los procesos cortos esperan detrás del largo.', SJF: 'El más corto primero minimiza el tiempo de espera promedio, pero necesita conocer la ráfaga.', SRTF: 'Como SJF pero expropiativo: si llega uno más corto que lo que le queda al actual, lo desplaza.', RR: 'Cada proceso usa la CPU como máximo un cuanto y vuelve al final de la cola.' };
+    function sim(PD, alg, q) {
+      const P = PD.map(([a, b], i) => ({ i, a, b, r: b, f: 0 })); let t = 0, cur = null, qt = 0, rq = [], g = [], n = 0;
+      while (n < P.length && t < 300) {
+        P.forEach(p => { if (p.a == t) rq.push(p) });
+        if (cur && alg == 'RR' && qt >= q) { rq.push(cur); cur = null }
+        if (cur && alg == 'SRTF' && rq.some(x => x.r < cur.r)) { rq.push(cur); cur = null }
+        if (!cur && rq.length) { if (alg == 'FCFS' || alg == 'RR') cur = rq.shift(); else { cur = rq.reduce((m, x) => x.r < m.r ? x : m); rq.splice(rq.indexOf(cur), 1) } qt = 0 }
+        if (cur) { g.push(cur.i); cur.r--; qt++; if (!cur.r) { cur.f = t + 1; n++; cur = null } } else g.push(-1); t++
+      }
+      return { g, P }
+    }
+    function labC(el) {
+      el.innerHTML = `<div class="bar"><select id="al"><option>FCFS</option><option>SJF</option><option>SRTF</option><option>RR</option></select><select id="ps"><option value="0">Procesos: 24, 3, 3 y 2 ms</option><option value="1">Procesos: 6, 8, 7 y 3 ms</option></select><label id="ql" hidden>cuanto <input id="q" type="number" min="1" max="10" value="4" style="width:60px"></label><button id="go">Simular</button></div><div id="out"></div>`;
+      let G, rev = 0, tot = 0;
+      three(el, (sc, cam) => { cam.position.set(0, 7, 10); G = new THREE.Group(); sc.add(G); return () => { if (rev < tot) { rev += .5; G.children.forEach(m => { if (m.userData.t != null) m.visible = m.userData.t < rev }) } sw(cam) } });
+      const run = () => {
+        const al = $('#al').value, { g, P } = sim(PS[$('#ps').value], al, +$('#q').value || 4); $('#ql').hidden = al != 'RR';
+        const w = P.map(p => p.f - p.a - p.b), avg = (w.reduce((x, y) => x + y, 0) / w.length).toFixed(2);
+        if (G) {
+          G.clear(); const n = g.length, u = .34, x0 = -n * u / 2; P.forEach((p, i) => {
+            const z = (i - 1.5) * 1.3; lb(G, x0 - .9, .4, z, 'P' + (i + 1)).userData = {};
+            for (let t = p.a; t < p.f; t++) { const r = g[t] == i, m = new THREE.Mesh(new THREE.BoxGeometry(u * .92, r ? 1 : .15, 1), mat(r ? C3[i] : 0x6b7aa8, r ? .35 : .05)); m.position.set(x0 + t * u + u / 2, r ? .5 : .08, z); m.userData = { t }; m.visible = false; G.add(m) }
+          }); rev = 0; tot = n + 4
+        }
+        $('#out').innerHTML = `<table><tr><th></th><th>Llega</th><th>Ráfaga</th><th>Termina</th><th>Espera</th></tr>${P.map((p, i) => `<tr><td style="color:${CL[i]}"><b>P${i + 1}</b></td><td>${p.a}</td><td>${p.b}</td><td>${p.f}</td><td>${w[i]}</td></tr>`).join('')}</table><div class="rd"><b>Espera promedio: ${avg} ms</b><br>${HI[al]}<br>Cada fila es un proceso. Barra alta: usa la CPU. Barra baja: espera en la cola de preparados.</div>`
+      };
+      $('#go').onclick = run; $('#al').onchange = run; $('#ps').onchange = run; $('#q').onchange = run; run();
+      return i => { $('#al').selectedIndex = [0, 1, 2, 3, 3][i]; run() };
+    }
+    /* 5 · Paso de mensajes */
+    function labM(el) {
+      let q = [], pS = null, pR = false, n = 0, msgs = [], A, B, sc0, say, rst;
+      el.innerHTML = `<div class="bar"><button id="sd">Proceso A: send()</button><button id="rc">Proceso B: receive()</button><select id="cp"><option value="3">Búfer de 3 mensajes</option><option value="0">Sin búfer (capacidad 0)</option></select><select id="md"><option value="s">Síncrono (bloquea)</option><option value="a">Asíncrono (no bloquea)</option></select></div><div class="log" id="lg"></div>`;
+      say = t => $('#lg').innerHTML = t;
+      three(el, (sc, cam) => {
+        sc0 = sc; cam.position.set(0, 5, 11);
+        const mk = (x, c) => { const m = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, .4, 32), mat(c, .2)); m.position.x = x; sc.add(m); const s = new THREE.Mesh(new THREE.SphereGeometry(.55), mat(c, .7)); s.position.set(x, 1, 0); sc.add(s); return { s, l: lb(sc, x, 2.3, 0, '') } };
+        A = mk(-6, 0x5b8cff); B = mk(6, 0x3ddc97); tx(sc, 'Proceso A', -6, -.8, 0); tx(sc, 'Proceso B', 6, -.8, 0);
+        const kb = new THREE.Mesh(new THREE.BoxGeometry(8, .25, 2.2), mat(0x8a97c8, .12)); kb.position.y = -.05; sc.add(kb); tx(sc, 'Núcleo: cola de mensajes', 0, -.9, 0);
+        const sl = [0, 1, 2].map(k => { const m = new THREE.Mesh(new THREE.BoxGeometry(1.8, .1, 1.5), mat(0x4a5a9a, .1)); m.position.set(-2.4 + k * 2.4, .2, 0); sc.add(m); return m });
+        return () => {
+          sl.forEach((s, k) => s.visible = k < +$('#cp').value);
+          msgs.forEach(o => {
+            const m = o.m; let t = [-4.2, 1, 0], z = 1; if (o.loc == 'q') t = [-2.4 + q.indexOf(o) * 2.4, .7, 0]; else if (o.loc == 'B') t = [4.2, 1, 0]; else if (o.loc == 'gone') { t = [6, 1, 0]; z = .01 }
+            m.position.x += (t[0] - m.position.x) * .1; m.position.y += (t[1] - m.position.y) * .1; m.scale.setScalar(m.scale.x + (z - m.scale.x) * .12); if (o.loc == 'gone' && m.scale.x < .03) { sc.remove(m); o.dead = 1 }
+          });
+          msgs = msgs.filter(o => !o.dead); sw(cam)
+        }
+      });
+      if (!A) return;
+      const st = () => { [[A, pS, 'send()'], [B, pR, 'receive()']].forEach(([p, b, f]) => { const c = b ? 0xe8463f : p == A ? 0x5b8cff : 0x3ddc97; p.s.material.color.setHex(c); p.s.material.emissive.setHex(c); p.l.set(b ? 'bloqueado en ' + f : 'ejecutando') }) };
+      const newMsg = () => { const m = new THREE.Mesh(new THREE.BoxGeometry(.9, .9, .9), mat(0xe8a317, .5)); m.position.set(-5, 1, 0); sc0.add(m); const o = { m, loc: 'A', n: ++n }; msgs.push(o); return o };
+      const deliver = o => { o.loc = 'B'; TM.push(setTimeout(() => o.loc = 'gone', 1300)) };
+      rst = () => { msgs.forEach(o => o.loc = 'gone'); q = []; pS = null; pR = false; st(); say('Pulsa send() varias veces: cuando el búfer se llena, A se bloquea. Luego pulsa receive().') };
+      $('#sd').onclick = () => {
+        const as = $('#md').value == 'a', C = +$('#cp').value;
+        if (pS) say('A ya está bloqueado esperando.');
+        else if (pR) { const o = newMsg(); pR = false; deliver(o); say(`send(): B estaba esperando y recibe el mensaje ${o.n} directamente. B se desbloquea.`) }
+        else if (q.length < C) { const o = newMsg(); q.push(o); o.loc = 'q'; say(`send(): el mensaje ${o.n} entra al búfer (${q.length} de ${C}).`) }
+        else if (as) say('<b>EAGAIN</b>: el búfer está lleno y la operación no bloquea. A debe reintentar más tarde.');
+        else { const o = newMsg(); pS = o; say('El búfer está lleno: A se <b>bloquea</b> en estado esperando hasta que B reciba.') } st()
+      };
+      $('#rc').onclick = () => {
+        const as = $('#md').value == 'a';
+        if (pR) say('B ya está bloqueado esperando.');
+        else if (q.length) { const o = q.shift(); deliver(o); let t = `receive(): B recibe el mensaje ${o.n}.`; if (pS) { q.push(pS); pS.loc = 'q'; pS = null; t += ' A se desbloquea y su mensaje entra al búfer.' } say(t) }
+        else if (pS) { const o = pS; pS = null; deliver(o); say(`receive(): B recibe el mensaje ${o.n} directamente de A, que se desbloquea.`) }
+        else if (as) say('<b>EAGAIN</b>: no hay mensajes y la operación no bloquea. B debe reintentar más tarde.');
+        else { pR = true; say('No hay mensajes: B se <b>bloquea</b> hasta que llegue uno.') } st()
+      };
+      $('#cp').onchange = rst; $('#md').onchange = rst; rst();
+      return i => { $('#cp').value = i == 2 ? '0' : '3'; $('#md').value = i == 3 ? 'a' : 's'; rst() };
+    }
+    /* 6 · Memoria compartida */
+    function labR(el) {
+      let pv = { A: 0, B: 0 }, sh = 0, run = 0, L, cells, lg;
+      el.innerHTML = `<div class="bar"><button id="b1">A escribe 42 en su memoria privada</button><button id="b2">A escribe 42 en la región compartida</button><button id="b3">B lee su memoria privada</button><button id="b4">B lee la región compartida</button></div><div class="bar"><label><input type="checkbox" id="sm"> Usar semáforo</label><button id="ex" class="g">Ejemplo del capítulo: el hijo duplica, el padre lee</button></div><div class="log" id="lg"></div>`;
+      lg = t => $('#lg').innerHTML = t;
+      three(el, (sc, cam) => {
+        cam.position.set(0, 5, 11);
+        const col = (x, t) => {
+          const m = new THREE.Mesh(new THREE.BoxGeometry(3, 4.4, 2.4), new THREE.MeshStandardMaterial({ color: 0x8fb0ff, transparent: true, opacity: .16 })); m.position.set(x, 2, 0); sc.add(m); tx(sc, t, x, 4.6, 0);
+          const c = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.1, 1.1), mat(0x5b8cff, .3)); c.position.set(x, .8, 0); sc.add(c); return { c, l: lb(sc, x, 1.9, .9, '0') }
+        };
+        const a = col(-5.5, 'Espacio de A'), b = col(5.5, 'Espacio de B'); tx(sc, 'memoria privada', -5.5, -.4, 1.3); tx(sc, 'memoria privada', 5.5, -.4, 1.3);
+        const slab = new THREE.Mesh(new THREE.BoxGeometry(3, .3, 2.4), mat(0x3ddc97, .25)); slab.position.set(0, .2, 0); sc.add(slab); tx(sc, 'Región compartida', 0, -.4, 1.3);
+        const s = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.1, 1.1), mat(0x3ddc97, .4)); s.position.set(0, .95, 0); sc.add(s); const sl = lb(sc, 0, 2, .9, '0');
+        [-5.5, 5.5].forEach(x => sc.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x, 3.2, 0), new THREE.Vector3(0, 3.2, 0), new THREE.Vector3(0, 1.6, 0)]), new THREE.LineBasicMaterial({ color: 0x3ddc97 })))); tx(sc, 'ambos procesos la ven', 0, 3.7, 0);
+        const sp = new THREE.Mesh(new THREE.SphereGeometry(.28), mat(0xe8a317, .9)); sp.visible = false; sc.add(sp);
+        cells = { A: a, B: b, S: { c: s, l: sl }, sp, p: {} };
+        return () => {
+          [a.c, b.c, s].forEach(m => { const p = cells.p[m.uuid] || 0; m.scale.setScalar(1 + p * .4); cells.p[m.uuid] = p * .92 });
+          if (cells.go) { const g = cells.go; g.t += .03; sp.visible = g.t < 1; sp.position.set(g.f[0] + (g.to[0] - g.f[0]) * g.t, g.f[1] + Math.sin(g.t * Math.PI) * 1.2, 0); if (g.t >= 1) cells.go = 0 } sw(cam, 1.5)
+        }
+      });
+      if (!cells) return;
+      const pl = m => cells.p[m.uuid] = 1, fly = (f, to) => cells.go = { f, to, t: 0 }, up = () => { cells.A.l.set(String(pv.A)); cells.B.l.set(String(pv.B)); cells.S.l.set(String(sh)) };
+      $('#b1').onclick = () => { pv.A = 42; up(); pl(cells.A.c); lg('A escribió en su memoria privada. B tiene su propia copia, así que su valor sigue en 0. Es lo que pasa con MAP_PRIVATE tras un fork().') };
+      $('#b2').onclick = () => { sh = 42; up(); pl(cells.S.c); lg('A escribió en la región compartida: la memoria física es la misma para los dos, no se copia nada.') };
+      $('#b3').onclick = () => { pl(cells.B.c); fly([5.5, 1.4], [5.5, 2.6]); lg(`B lee su memoria privada y obtiene ${pv.B}: la escritura de A no llega hasta aquí.`) };
+      $('#b4').onclick = () => { pl(cells.S.c); fly([0, 1.4], [5.5, 1.4]); lg(`B lee la región compartida y obtiene ${sh}. Si A no escribió todavía, B lee el valor antiguo: hay que sincronizarse.`) };
+      $('#ex').onclick = () => {
+        if (run) return; run = 1; sh = 1; up(); const sem = $('#sm').checked; let w = 0, r = 0, o = []; lg('El hijo duplica el valor cada segundo; el padre lo lee...');
+        const rd = () => { o.push(sh); pl(cells.S.c); fly([0, 1.4], [5.5, 1.4]); lg(`Padre lee: ${o.join(', ')}`); r++ };
+        const fin = () => { if (w < 5 || r < 5) return; run = 0; lg(sem ? `Con semáforo el padre esperó cada sem_post() y leyó: ${o.join(', ')}. Un valor nuevo en cada lectura.` : `Sin semáforo el padre leyó a su ritmo: ${o.join(', ')}. Repite valores y se pierde resultados del hijo.`) };
+        TM.push(setInterval(function () { sh *= 2; w++; up(); pl(cells.S.c); if (sem) rd(); if (w == 5) clearInterval(this); fin() }.bind(null), 1000));
+        if (!sem) TM.push(setInterval(() => { if (r < 5) rd(); fin() }, 700))
+      };
+      up(); lg('Prueba la diferencia entre escribir en memoria privada y en la región compartida.');
+      return i => { if (i == 3) $('#sm').checked = true; lg('Ejecuta el ejemplo con y sin semáforo para comparar.') };
+    }
+    const IC = { h: '<circle cx="20" cy="20" r="14"/><path d="M20 11v9l6 4"/>', s: '<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="22" y="6" width="12" height="12" rx="2"/><rect x="6" y="22" width="12" height="12" rx="2"/><rect x="22" y="22" width="12" height="12" rx="2"/>', p: '<rect x="9" y="9" width="22" height="22" rx="3"/><path d="M15 3v6M25 3v6M15 31v6M25 31v6M3 15h6M3 25h6M31 15h6M31 25h6"/>', c: '<path d="M5 32h30M8 28V16M16 28V8M24 28V20M32 28V12"/>', m: '<rect x="4" y="9" width="32" height="22" rx="2"/><path d="M4 11l16 11 16-11"/>', r: '<rect x="4" y="8" width="13" height="24" rx="2"/><rect x="23" y="8" width="13" height="24" rx="2"/><path d="M17 15h6M17 25h6"/>' };
+    const T = [
+      {
+        cap: 3, t: 'Historia de los sistemas operativos', d: 'Cinco generaciones, desde ENIAC hasta Linux.', ic: 'h', run: labH,
+        st: [['Primera generación (1945-55): sin sistema operativo', 'Los ordenadores usaban válvulas de vacío y se programaban directamente en lenguaje máquina. No existía ningún sistema operativo: quien programaba controlaba toda la máquina. ENIAC (1945) se usó para calcular tablas de tiro de artillería y el IBM 701 (1953) fue el primer ordenador comercial de IBM.'], ['Segunda generación (1955-64): lotes y monitores', 'Con los transistores aparecen los monitores del sistema y el procesamiento por lotes: cargar y ejecutar un trabajo automáticamente cuando termina el anterior. GM-NAA I/O (1956), hecho por General Motors para el IBM 704, se considera el primer sistema operativo. Se usan ensamblador, FORTRAN y COBOL.'], ['Tercera generación (1965-68): multiprogramación', 'Con los circuitos integrados llegan los sistemas multiprogramados. IBM OS/360, para el mainframe System/360, se anunció en 1964 y salió en 1966, con un año de retraso. Fue un proyecto tan grande que ayudó a dar forma a la ingeniería del software.'], ['Cuarta generación (1965-80): tiempo compartido', 'Los microprocesadores traen el tiempo compartido, los terminales, los programas interactivos y las máquinas virtuales. Multics introdujo el sistema de archivos jerárquico y de él nació UNIX (1970): muchas herramientas pequeñas que trabajan juntas y dispositivos tratados como archivos. VM/CMS de IBM virtualizó el hardware.'], ['Quinta generación (desde 1980): el ordenador personal', 'Aparecen los sistemas de escritorio y las interfaces gráficas. MS-DOS (1981) no tenía modo dual, así que el error de una aplicación podía tumbar todo el sistema. Macintosh (1984) popularizó la interfaz gráfica, Linux (1991) unió el núcleo de Linus Torvalds con las herramientas GNU y Windows NT (1993) trajo un sistema moderno.']],
+        q: [['¿Cuál se considera el primer sistema operativo?', ['ENIAC', 'GM-NAA I/O', 'UNIX'], 1], ['¿Qué característica faltaba en MS-DOS?', ['Interfaz de línea de comandos', 'Operación en modo dual', 'Sistema de archivos'], 1]]
+      },
+      {
+        cap: 5, t: 'Servicios del sistema', d: 'Qué ofrece el sistema operativo a programas y usuarios.', ic: 's', run: labS,
+        st: [['Qué es un servicio', 'El sistema operativo proporciona un entorno para ejecutar programas, y lo hace con servicios que ofrecen sus componentes trabajando de forma coordinada. Se agrupan en dos familias: los que garantizan un funcionamiento eficiente y los que son útiles para el usuario. Pulsa cada esfera para ver el detalle.'], ['Servicios de eficiencia (esferas ámbar)', 'Asignación de recursos (CPU, memoria y archivos), monitorización (quién usa qué recurso y en qué cantidad) y protección y seguridad (que nadie acceda a lo que no debe, ni otros usuarios ni agentes externos).'], ['Servicios para el usuario (esferas azules)', 'Interfaz de usuario, operaciones de E/S, sistemas de archivos, comunicaciones y detección de errores. Los programas no tocan los dispositivos directamente: piden la operación al sistema, por eficiencia y protección.'], ['La interfaz de usuario', 'Puede ser de línea de comandos (la shell), de proceso por lotes (scripts) o gráfica. Como cambia de un sistema a otro y de un usuario a otro, se trata como un servicio y no como componente básico. Además hay programas del sistema, como compiladores o gestores de archivos.']],
+        q: [['Una universidad quiere cobrar por el tiempo de CPU de cada usuario. ¿Qué servicio lo hace posible?', ['Asignación de recursos', 'Monitorización', 'Protección y seguridad'], 1], ['¿Por qué un programa no escribe directamente en la impresora?', ['Por eficiencia y protección, el sistema media el acceso', 'Porque la impresora solo la maneja la shell', 'Porque la CPU no puede enviar datos'], 0]]
+      },
+      {
+        cap: 9, t: 'Procesos', d: 'Estados, PCB y cambio de contexto.', ic: 'p', run: labP,
+        st: [['Programa y proceso', 'Un programa es un archivo ejecutable; un proceso es ese programa en ejecución. Incluye código, datos, BSS, pila (variables locales), montón (memoria dinámica) y su estado de ejecución. Dos procesos del mismo programa comparten el código, pero todo lo demás es propio de cada uno.'], ['Los cinco estados', 'Nuevo, preparado, ejecutando, esperando y terminado. Solo un proceso por CPU está ejecutando. Cuando termina una operación de E/S, el proceso pasa de esperando a preparado, nunca directamente a ejecutando. Mueve la esfera con los botones.'], ['El PCB', 'Es la ficha del proceso dentro del sistema: PID, estado, contador de programa, registros de la CPU, datos de planificación, de memoria y de E/S. Mientras ejecuta, el contador está en la CPU y solo se copia al PCB cuando el proceso sale de ella.'], ['Cambio de contexto', 'Para darle la CPU a otro proceso, el sistema guarda el estado del actual en su PCB y carga el del siguiente. Es sobrecarga pura: mientras ocurre, ningún proceso avanza.']],
+        q: [['Un proceso esperando termina su lectura de disco. ¿A qué estado pasa?', ['Ejecutando', 'Preparado', 'Terminado'], 1], ['Mientras un proceso ejecuta, ¿dónde está su contador de programa?', ['En su PCB', 'En la pila', 'En un registro de la CPU'], 2]]
+      },
+      {
+        cap: 10, t: 'Planificación de la CPU', d: 'FCFS, SJF, SRTF y Round Robin en un Gantt 3D.', ic: 'c', run: labC,
+        st: [['FCFS: el primero que llega', 'Cola FIFO sin expropiación. Si un proceso largo llega primero, los cortos esperan detrás: es el efecto convoy. Con el ejemplo de 24, 3, 3 y 2 ms la espera promedio es de 18,75 ms.'], ['SJF: el más corto primero', 'Elige el proceso con la ráfaga más corta y da el menor tiempo de espera promedio. El problema es que el sistema no conoce la ráfaga de antemano y tiene que estimarla.'], ['SRTF: SJF con expropiación', 'Si llega un proceso con menos tiempo que el que le queda al actual, lo expropia. Suele mejorar el tiempo de respuesta, a costa de más cambios de contexto.'], ['Round Robin: turnos con cuanto', 'Cada proceso usa la CPU hasta un cuanto y vuelve al final de la cola. Prueba cuantos distintos: si es muy grande se parece a FCFS y si es muy pequeño se pierde tiempo en cambios de contexto.'], ['Cómo se compara un algoritmo', 'Se mide con el uso de CPU, la tasa de procesamiento, el tiempo de ejecución, el de espera y el de respuesta. En sistemas interactivos importa más que la respuesta sea predecible que su promedio.']],
+        q: [['¿Qué algoritmo da el menor tiempo de espera promedio?', ['FCFS', 'SJF', 'Round Robin'], 1], ['¿Qué pasa en Round Robin si el cuanto es mayor que todas las ráfagas?', ['Se comporta como FCFS', 'Se comporta como SJF', 'Mejora el tiempo de espera'], 0]]
+      },
+      {
+        cap: 11, t: 'Paso de mensajes', d: 'send(), receive(), búfer y bloqueo, en 3D.', ic: 'm', run: labM,
+        st: [['Procesos cooperativos', 'Los procesos que comparten datos se afectan entre sí y se llaman cooperativos. Para comunicarse hay dos estrategias: memoria compartida o paso de mensajes. Con mensajes, el sistema operativo entrega los datos y se encarga de la sincronización: solo hacen falta send() y receive().'], ['Comunicación directa o indirecta', 'En la directa se nombra al proceso (su PID) y, si cambia, hay que actualizar todas las referencias. En la indirecta se usan buzones o puertos, así los procesos no dependen de identificadores. Las colas de mensajes POSIX son indirectas.'], ['Búfer de capacidad cero o limitada', 'Sin búfer, el emisor se bloquea hasta que el receptor reciba. Con capacidad limitada, solo se bloquea cuando la cola se llena. Un búfer infinito no existe, porque los recursos son limitados. Prueba ambos en la escena.'], ['Síncrono o asíncrono', 'Síncrono: el proceso se bloquea si la cola está llena (al enviar) o vacía (al recibir). Asíncrono: nunca bloquea y devuelve un error para reintentar; en POSIX es -1 con EAGAIN si se abre la cola con O_NONBLOCK.'], ['Mecanismos reales', 'Colas de mensajes POSIX (indirectas, tamaño variable y capacidad limitada), señales (directas, tamaño fijo: solo indican un evento), tuberías (flujo de bytes que no separa los mensajes) y sockets (con AF_INET llegan a procesos de otros ordenadores).']],
+        q: [['Con un búfer lleno y envío síncrono, ¿qué ocurre?', ['El mensaje se pierde', 'El emisor se bloquea hasta que haya hueco', 'El receptor se bloquea'], 1], ['¿Qué ventaja da la comunicación indirecta?', ['Los procesos no dependen del PID del otro', 'Los mensajes siempre son más rápidos', 'No necesita sistema operativo'], 0]]
+      },
+      {
+        cap: 12, t: 'Memoria compartida', d: 'Dos procesos, una misma región de memoria.', ic: 'r', run: labR,
+        st: [['Qué es', 'Un proceso gana acceso a una región de la memoria de otro, algo que el sistema operativo normalmente evita. Los dos procesos deben acordar compartirla y después leen y escriben en ella sin copiar datos.'], ['Responsabilidad de los procesos', 'La estructura de los datos y la sincronización las deciden los procesos, no el sistema. Sus ventajas son la eficiencia (velocidad de la memoria principal) y la conveniencia (solo hay que leer y escribir).'], ['Anónima y con nombre', 'La anónima se crea con mmap() y MAP_SHARED y se comparte con los hijos mediante fork(). La que tiene nombre se abre con shm_open() y la ve cualquier proceso con permisos. Con MAP_PRIVATE cada proceso tiene su propia copia: pruébalo con el botón de memoria privada.'], ['Sincronizar con un semáforo', 'En el ejemplo del capítulo el hijo duplica un valor y el padre lo lee. Sin sincronizar, el padre lee a su ritmo y repite valores. Con sem_wait() y sem_post(), el padre espera cada resultado nuevo.']],
+        q: [['Un hijo escribe 42 en una región mmap() con MAP_PRIVATE. ¿Qué lee el padre?', ['42', '0, porque el hijo escribió en su copia', 'Un error'], 1], ['Dos programas lanzados por separado quieren compartir memoria. ¿Qué usan?', ['shm_open() con el mismo nombre', 'mmap() anónimo', 'fork()'], 0]]
+      }
+    ];
+    const CASES = [
+      { title: 'El ordenador de una sala de cómputo', situation: 'Una institución pasa de equipos que se programaban manualmente a ordenadores que ejecutan trabajos de muchos estudiantes. ¿Qué cambios históricos explican que hoy podamos abrir varias aplicaciones y alternar entre ellas?', answer: 'La evolución fue acumulativa: los monitores y el procesamiento por lotes automatizaron trabajos; la multiprogramación aprovechó la CPU mientras otro trabajo esperaba; el tiempo compartido permitió interacción entre varios usuarios; y los sistemas personales popularizaron las interfaces gráficas y la multitarea.' },
+      { title: 'Un laboratorio con recursos compartidos', situation: 'En un laboratorio, varios programas quieren usar la CPU, la memoria, una impresora y archivos al mismo tiempo. ¿Por qué no conviene que cada programa controle directamente el hardware?', answer: 'El sistema operativo actúa como coordinador. Asigna recursos, registra su uso, protege los procesos y media las operaciones de entrada/salida. Así evita conflictos, accesos indebidos y desperdicio de recursos.' },
+      { title: 'Dos aplicaciones abiertas al mismo tiempo', situation: 'Estás en una videollamada y abres un navegador. El sistema alterna entre ambos, pero uno queda esperando mientras recibe datos de la red. ¿Qué ocurre con sus estados?', answer: 'Cada aplicación en ejecución es un proceso independiente. El planificador puede sacar de la CPU al proceso que estaba ejecutando y guardar su contexto en el PCB. Si espera una operación de E/S pasa a esperando; cuando esta termina vuelve a preparado y podrá ser elegido para ejecutar.' },
+      { title: 'La CPU es una sola, pero hay muchas tareas', situation: 'Cuatro procesos llegan casi al mismo tiempo. Uno necesita 24 ms y los demás solo 3, 3 y 2 ms. ¿Qué efecto puede producir FCFS y cómo cambia la experiencia con Round Robin?', answer: 'Con FCFS, si el proceso largo llega primero, los cortos esperan detrás: es el efecto convoy. Round Robin reparte la CPU en turnos de duración limitada (cuanto), lo que mejora la capacidad de respuesta percibida en sistemas interactivos, aunque un cuanto demasiado pequeño aumenta el coste de los cambios de contexto.' },
+      { title: 'Dos procesos deben coordinarse', situation: 'Un proceso produce mensajes y otro los consume. La cola tiene capacidad limitada y se llena. ¿Qué sucede con un envío síncrono y qué cambia con uno asíncrono?', answer: 'En el modo síncrono, el emisor queda bloqueado hasta que exista espacio en la cola. En el modo asíncrono, la llamada no espera: informa que no pudo enviar (por ejemplo, EAGAIN) y el proceso decide cuándo reintentar. El receptor también puede bloquearse si espera un mensaje en una cola vacía.' },
+      { title: 'Compartir datos sin duplicarlos', situation: 'Un proceso hijo actualiza un contador y el proceso padre necesita leer cada nuevo valor. ¿Por qué compartir memoria no basta para garantizar que el padre lea los datos en el orden correcto?', answer: 'La región compartida permite que ambos accedan a los mismos datos, pero no define por sí sola el orden de lectura y escritura. Hace falta sincronización. Un semáforo puede coordinar al productor y al consumidor: el hijo señala que publicó un valor y el padre espera esa señal antes de leerlo.' }
+    ];
+    const OUTCOMES = [
+      'Reconocer los hitos que llevaron de la ejecución manual a los sistemas actuales.',
+      'Explicar cómo el sistema operativo coordina recursos y ofrece servicios.',
+      'Distinguir programa, proceso, estados, PCB y cambio de contexto.',
+      'Comparar algoritmos de planificación y observar sus efectos en una línea de tiempo.',
+      'Describir la comunicación entre procesos mediante send(), receive() y búferes.',
+      'Diferenciar memoria privada y compartida, e identificar por qué se necesita sincronización.'
+    ];
+    let cur = -1;
+    function nav() { $('#nv').innerHTML = T.map((x, i) => `<button class="${i == cur ? 'on' : ''}" data-i="${i}"><span style="opacity:.65;font-size:11px">0${i + 1}</span>${x.t}<i class="${done.includes(i) ? 'd' : ''}"></i></button>`).join('') }
+    function home() {
+      clr(); cur = -1; nav(); $('#app').innerHTML = `
  <section class="subject-heading"><div class="topic-meta">UNIB.E · SISTEMAS OPERATIVOS</div><h1>Sistemas Operativos</h1><p>Historia, servicios, procesos, planificación de la CPU y comunicación entre procesos.</p></section>
- <div class="grid topics-grid">${T.map((x,i)=>`<button class="card topic-card" data-i="${i}"><span class="card-art art-${['historia','servicios','procesos','cpu','mensajes','memoria'][i]}"></span><small>CAPÍTULO ${x.cap}</small><h3>${x.t}</h3><p>${x.d}</p><span class="st">Estudiar tema <b>↗</b></span></button>`).join('')}</div>
+ <div class="grid topics-grid">${T.map((x, i) => `<button class="card topic-card" data-i="${i}"><span class="card-art art-${['historia', 'servicios', 'procesos', 'cpu', 'mensajes', 'memoria'][i]}"></span><small>CAPÍTULO ${x.cap}</small><h3>${x.t}</h3><p>${x.d}</p><span class="st">Estudiar tema <b>↗</b></span></button>`).join('')}</div>
 `;
- $('#app').onclick=e=>{const b=e.target.closest('.card');if(b)open(+b.dataset.i)}}
-function open(i){clr();cur=i;nav();const x=T[i];let s=0,go;
- $('#app').onclick=null;$('#app').innerHTML=`
+      $('#app').onclick = e => { const b = e.target.closest('.card'); if (b) open(+b.dataset.i) }
+    }
+    function open(i) {
+      clr(); cur = i; nav(); const x = T[i]; let s = 0, go;
+      $('#app').onclick = null; $('#app').innerHTML = `
  <div class="lesson-head"><div><div class="topic-meta">CAPÍTULO ${x.cap}</div><h1>${x.t}</h1><p class="sub">${x.d}</p></div><button class="btn o" id="pz">⛶ Modo presentación</button></div>
  <div class="view"><div class="pn lab" id="lab"></div><div class="pn"><div class="sp" id="sp"></div><div class="sc" id="sc"></div><h2 class="stt" id="stt"></h2><div class="stx" id="stx"></div><div class="nv"><button class="btn o" id="pv">← Anterior</button><button class="btn" id="nx">Siguiente →</button></div></div></div>
  <section class="casebox"><div class="eyebrow">APLICACIÓN</div><h3>${CASES[i].title}</h3><p>${CASES[i].situation}</p><button class="btn o" id="reveal">Revelar explicación</button><div class="case-answer" id="answer">${CASES[i].answer}</div></section>
- <div class="nv" style="justify-content:space-between;margin-top:20px"><button class="btn o" id="backhome">Volver al panel</button><button class="btn" id="nexttopic">${i===T.length-1?'Finalizar recorrido':'Siguiente tema →'}</button></div>`;
- go=x.run($('#lab'));const art=['historia','servicios','procesos','cpu','mensajes','memoria'][i];const cv=$('.cv',$('#lab'));if(cv)cv.classList.add('scene-'+art);
- const show=()=>{$('#sp').innerHTML=x.st.map((_,k)=>`<i class="${k==s?'on':k<s?'dn':''}"></i>`).join('');$('#sc').textContent=`Explicación ${s+1} de ${x.st.length}`;$('#stt').textContent=x.st[s][0];$('#stx').textContent=x.st[s][1];$('#pv').disabled=!s;$('#nx').disabled=s==x.st.length-1;go&&go(s);
-  if(s===x.st.length-1&&!done.includes(i)){done.push(i);try{localStorage.setItem('solab2',JSON.stringify(done))}catch(e){}nav()}};
- $('#pv').onclick=()=>{if(s>0){s--;show()}};$('#nx').onclick=()=>{if(s<x.st.length-1){s++;show()}};$('#pz').onclick=pres;
- $('#reveal').onclick=()=>{$('#answer').classList.toggle('show');$('#reveal').textContent=$('#answer').classList.contains('show')?'Ocultar explicación':'Revelar explicación'};
- $('#backhome').onclick=home;$('#nexttopic').onclick=()=>i<T.length-1?open(i+1):home();
- show();window.scrollTo(0,0)}
-function pres(){const on=document.body.classList.toggle('pres');if(on&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{});if(!on&&document.fullscreenElement)document.exitFullscreen()}
-document.addEventListener('keydown',e=>{if(cur<0)return;if(e.key=='ArrowRight')$('#nx')&&$('#nx').click();if(e.key=='ArrowLeft')$('#pv')&&$('#pv').click();if(e.key=='Escape'&&document.body.classList.contains('pres'))pres()});
-$('#nv').onclick=e=>{const b=e.target.closest('button');if(b)open(+b.dataset.i)};$('#hm').onclick=home;$('#pr').onclick=pres;home();
-</script></body></html>
+ <div class="nv" style="justify-content:space-between;margin-top:20px"><button class="btn o" id="backhome">Volver al panel</button><button class="btn" id="nexttopic">${i === T.length - 1 ? 'Finalizar recorrido' : 'Siguiente tema →'}</button></div>`;
+      go = x.run($('#lab')); const art = ['historia', 'servicios', 'procesos', 'cpu', 'mensajes', 'memoria'][i]; const cv = $('.cv', $('#lab')); if (cv) cv.classList.add('scene-' + art);
+      const show = () => {
+        $('#sp').innerHTML = x.st.map((_, k) => `<i class="${k == s ? 'on' : k < s ? 'dn' : ''}"></i>`).join(''); $('#sc').textContent = `Explicación ${s + 1} de ${x.st.length}`; $('#stt').textContent = x.st[s][0]; $('#stx').textContent = x.st[s][1]; $('#pv').disabled = !s; $('#nx').disabled = s == x.st.length - 1; go && go(s);
+        if (s === x.st.length - 1 && !done.includes(i)) { done.push(i); try { localStorage.setItem('solab2', JSON.stringify(done)) } catch (e) { } nav() }
+      };
+      $('#pv').onclick = () => { if (s > 0) { s--; show() } }; $('#nx').onclick = () => { if (s < x.st.length - 1) { s++; show() } }; $('#pz').onclick = pres;
+      $('#reveal').onclick = () => { $('#answer').classList.toggle('show'); $('#reveal').textContent = $('#answer').classList.contains('show') ? 'Ocultar explicación' : 'Revelar explicación' };
+      $('#backhome').onclick = home; $('#nexttopic').onclick = () => i < T.length - 1 ? open(i + 1) : home();
+      show(); window.scrollTo(0, 0)
+    }
+    function pres() { const on = document.body.classList.toggle('pres'); if (on && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => { }); if (!on && document.fullscreenElement) document.exitFullscreen() }
+    document.addEventListener('keydown', e => { if (cur < 0) return; if (e.key == 'ArrowRight') $('#nx') && $('#nx').click(); if (e.key == 'ArrowLeft') $('#pv') && $('#pv').click(); if (e.key == 'Escape' && document.body.classList.contains('pres')) pres() });
+    $('#nv').onclick = e => { const b = e.target.closest('button'); if (b) open(+b.dataset.i) }; $('#hm').onclick = home; $('#pr').onclick = pres; home();
+  </script>
+</body>
+
+</html>
